@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aizynt Combined Proposal Software</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="html2pdf.bundle.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-mark"><img src="logo.png" alt="Aizynt AI Solutions" class="sidebar-logo-img"></div>
+        <div><div class="sidebar-brand">AIZYNT</div><div class="sidebar-brand-sub">COMBINED PROPOSAL</div></div>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar"><i class="ti ti-layout-sidebar-left-collapse"></i></button>
+    </div>
+    <div class="editor-tabs">
+      <button class="tab-btn active" data-editor-tab="page1">Page 1</button>
+      <button class="tab-btn" data-editor-tab="page2">Page 2</button>
+    </div>
+    <div class="sidebar-scroll">
+      <div class="editor-panel active" id="page1Editor">
+        <div class="form-section"><div class="form-section-title"><i class="ti ti-building"></i> Client Details</div>
+          <div class="form-group"><label for="clientName">Client / Business Name</label><textarea id="clientName" rows="2" placeholder="e.g. Pronto Water Tank Cleaning">Pronto Water
+Tank Cleaning</textarea><span class="form-hint">Press Enter for two-line names</span></div>
+          <div class="form-group"><label for="clientLocation">Client Location</label><input type="text" id="clientLocation" value="Kamal Chowk, Nagpur" placeholder="e.g. Kamal Chowk, Nagpur"></div>
+        </div>
+        <div class="form-section"><div class="form-section-title"><i class="ti ti-file-description"></i> Proposal Info</div>
+          <div class="form-row"><div class="form-group"><label for="presentedBy">Presented By</label><input type="text" id="presentedBy" value="Nikhil Bawariya"></div><div class="form-group"><label for="role">Role</label><input type="text" id="role" value="Founder, Aizynt"></div></div>
+          <div class="form-row"><div class="form-group"><label for="proposalDate">Date</label><input type="text" id="proposalDate" value="May 2026"></div><div class="form-group"><label for="scope">Scope</label><input type="text" id="scope" value="Digital Growth System"></div></div>
+          <div class="form-group"><label for="proposalYear">Proposal Year</label><input type="text" id="proposalYear" value="2026"></div>
+        </div>
+      </div>
+      <div class="editor-panel" id="page2Editor"><div id="page2Fields"></div></div>
+    </div>
+    <div class="sidebar-footer"><button class="btn-download" id="downloadBtn"><i class="ti ti-download"></i> Download Combined PDF</button><button class="btn-reset" id="resetBtn"><i class="ti ti-refresh"></i> Reset</button></div>
+  </aside>
+  <button class="sidebar-open-btn" id="sidebarOpenBtn" title="Open form"><i class="ti ti-forms"></i></button>
+  <main class="preview-area" id="previewArea">
+    <div class="preview-toolbar"><span class="preview-label">Live Preview - Combined A4 Proposal (Page 01 + Page 02)</span><div class="zoom-controls"><button class="zoom-btn" id="zoomOut" title="Zoom out"><i class="ti ti-minus"></i></button><span class="zoom-value" id="zoomValue">100%</span><button class="zoom-btn" id="zoomIn" title="Zoom in"><i class="ti ti-plus"></i></button><button class="zoom-btn" id="zoomFit" title="Fit to screen"><i class="ti ti-arrows-maximize"></i></button></div></div>
+    <div class="preview-scroll"><div class="preview-wrapper" id="previewWrapper"><div class="pdf-document" id="pdfDocument"><div class="a4-page pdf-page" id="proposalPage">
+
+          <!-- HEADER -->
+          <div class="hdr">
+            <div class="hdr-geo" aria-hidden="true">
+              <span class="hg hg-1"></span>
+              <span class="hg hg-2"></span>
+              <span class="hg-dot hg-dot-1"></span>
+              <span class="hg-dot hg-dot-2"></span>
+              <span class="hg-line"></span>
+            </div>
+            <div class="hdr-logo">
+              <img src="logo.png" alt="Aizynt AI Solutions" class="hdr-logo-img">
+            </div>
+            <div class="hdr-right">
+              <div class="hdr-kicker">AIZYNT AI SOLUTIONS</div>
+              <div class="hdr-pill">DIGITAL GROWTH PROPOSAL &middot; <span id="p_year">2026</span></div>
+            </div>
+          </div>
+
+          <!-- HERO -->
+          <div class="hero">
+            <div class="hero-grid"></div>
+            <div class="c1"></div><div class="c2"></div><div class="c3"></div>
+            <div class="dot-grid">
+              <div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div>
+              <div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div>
+              <div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div><div class="dg-dot"></div>
+            </div>
+            <div class="hero-copy">
+              <div class="hero-label">
+                <div class="hl-line"></div>
+                <div class="hl-text" id="p_heroLocation">NAGPUR &middot; INDIA</div>
+              </div>
+              <div class="hero-h1">
+                <div class="h1-kicker">Digital growth</div>
+                <div class="h1-main">built to</div>
+                <div class="h1-biz">convert.</div>
+              </div>
+              <div class="hero-rule">
+                <div class="hr-w"></div><div class="hr-t"></div>
+              </div>
+              <div class="hero-desc" id="p_heroDesc">A premium web, local search and performance marketing plan designed to turn high-intent attention into calls, bookings and measurable revenue.</div>
+            </div>
+            <div class="hero-insight">
+              <div class="insight-label">FOCUS AREAS</div>
+              <div class="insight-row"><i class="ti ti-world"></i><span>Conversion-ready website</span></div>
+              <div class="insight-row"><i class="ti ti-map-pin"></i><span>Local search visibility</span></div>
+              <div class="insight-row"><i class="ti ti-chart-arrows-vertical"></i><span>Ads, content and automation</span></div>
+              <div class="insight-note">Built for trust, discovery and repeatable lead flow.</div>
+            </div>
+          </div>
+
+          <!-- PREP -->
+          <div class="prep">
+            <div class="prep-client">
+              <div class="prep-label">PREPARED FOR</div>
+              <div class="prep-name" id="p_clientName">Pronto Water<br>Tank Cleaning</div>
+              <div class="prep-sub" id="p_clientLocation">Kamal Chowk, Nagpur</div>
+            </div>
+            <div class="prep-meta">
+              <div class="prep-meta-item"><div class="pml">PRESENTED BY</div><div class="pmv" id="p_presentedBy">Nikhil Bawariya</div></div>
+              <div class="prep-meta-item"><div class="pml">ROLE</div><div class="pmv" id="p_role">Founder, Aizynt</div></div>
+              <div class="prep-meta-item"><div class="pml">DATE</div><div class="pmv" id="p_date">May 2026</div></div>
+              <div class="prep-meta-item"><div class="pml">SCOPE</div><div class="pmv" id="p_scope">Digital Growth System</div></div>
+            </div>
+          </div>
+
+          <!-- BODY -->
+          <div class="body">
+            <div class="about-block">
+              <div class="about-num">01</div>
+              <div class="about-right">
+                <div class="sec-eye">ABOUT AIZYNT AI SOLUTIONS</div>
+                <div class="about-heading" id="p_aboutHeading">Digital systems that make local demand <em>easier to capture.</em></div>
+                <div class="about-text" id="p_aboutText">Aizynt AI Solutions builds polished websites, local discovery systems, performance campaigns and AI-assisted workflows for growing service businesses. The goal is simple: make the brand easier to find, easier to trust and easier to contact when customers are ready to act.</div>
+              </div>
+            </div>
+
+            <div class="svc-wrap">
+              <div class="sec-eye">CORE SERVICES</div>
+              <div class="svc-grid">
+                <div class="svc">
+                  <i class="ti ti-world svc-icon" aria-hidden="true"></i>
+                  <div class="svc-name">Web Development</div>
+                  <div class="svc-desc">Fast, polished pages designed around enquiries, trust and clear action.</div>
+                </div>
+                <div class="svc">
+                  <i class="ti ti-speakerphone svc-icon" aria-hidden="true"></i>
+                  <div class="svc-name">Performance Ads</div>
+                  <div class="svc-desc">Targeted Meta and Google campaigns tuned for high-intent local reach.</div>
+                </div>
+                <div class="svc">
+                  <i class="ti ti-map-pin svc-icon" aria-hidden="true"></i>
+                  <div class="svc-name">Local SEO</div>
+                  <div class="svc-desc">Google Business optimisation for stronger map and search visibility.</div>
+                </div>
+                <div class="svc">
+                  <i class="ti ti-palette svc-icon" aria-hidden="true"></i>
+                  <div class="svc-name">Brand Identity</div>
+                  <div class="svc-desc">Visual identity, messaging and trust signals for a sharper first impression.</div>
+                </div>
+                <div class="svc">
+                  <i class="ti ti-cpu svc-icon" aria-hidden="true"></i>
+                  <div class="svc-name">AI Automation</div>
+                  <div class="svc-desc">Lead capture, smart replies and workflow support to reduce manual follow-up.</div>
+                </div>
+                <div class="svc">
+                  <i class="ti ti-layout-grid svc-icon" aria-hidden="true"></i>
+                  <div class="svc-name">Content Strategy</div>
+                  <div class="svc-desc">Local content themes, social creatives and campaigns that stay consistent.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="adv">
+              <svg class="adv-geo" width="120" height="120" viewBox="0 0 140 140">
+                <circle cx="70" cy="70" r="65" fill="none" stroke="#3B82F6" stroke-width="1"/>
+                <circle cx="70" cy="70" r="42" fill="none" stroke="#3B82F6" stroke-width="0.6"/>
+                <circle cx="70" cy="70" r="20" fill="none" stroke="#3B82F6" stroke-width="0.4"/>
+                <line x1="0" y1="70" x2="140" y2="70" stroke="#3B82F6" stroke-width="0.4"/>
+                <line x1="70" y1="0" x2="70" y2="140" stroke="#3B82F6" stroke-width="0.4"/>
+              </svg>
+              <div class="adv-left">
+                <div class="adv-eye">OUR EDGE</div>
+                <div class="adv-head" id="p_advHeading">Premium execution.<br>Founder-led care.</div>
+              </div>
+              <div class="adv-div"></div>
+              <div class="adv-text" id="p_advText">This proposal is structured for practical growth: clean design, measurable marketing, stronger local visibility and simple systems that support daily operations. You get focused execution, transparent communication and a partner invested in proving value early.</div>
+            </div>
+          </div>
+
+          <!-- FOOTER -->
+          <div class="footer">
+            <div class="ft-left">
+              <div class="ft-bar"></div>
+              <div>
+                <div class="ft-name" id="p_footerName">Nikhil Bawariya - Founder, Aizynt AI Solutions</div>
+                <div class="ft-contact" id="p_footerContact">+91 76208 16906 &middot; aizyntaisolutions@gmail.com &middot; aizynt.com &middot; @aizynt.ai</div>
+              </div>
+            </div>
+            <div class="ft-right">
+              <div class="ft-links" id="p_footerLocation">Nagpur, Maharashtra<br>Confidential</div>
+              <div class="ft-page" id="p_footerPage">01</div>
+            </div>
+          </div>
+
+        </div><!-- /a4-page --><div class="p2-page-shell pdf-page" id="proposalPage2"><div class="p2-page">
+      <header class="p2-hdr">
+        <div class="p2-hdr-geo" aria-hidden="true">
+          <span class="p2-hg p2-hg-1"></span>
+          <span class="p2-hg p2-hg-2"></span>
+          <span class="p2-hg-dot p2-hg-dot-1"></span>
+          <span class="p2-hg-dot p2-hg-dot-2"></span>
+          <span class="p2-hg-line"></span>
+        </div>
+        <div class="p2-hdr-logo">
+          <img src="logo.png" alt="Aizynt AI Solutions" class="p2-hdr-logo-img">
+        </div>
+        <div class="p2-hdr-right">
+          <div class="p2-hdr-kicker">AIZYNT AI SOLUTIONS</div>
+          <div class="p2-hdr-pill">DIGITAL GROWTH PROPOSAL &middot; <span id="p2_year">2026</span></div>
+        </div>
+      </header>
+      <section class="p2-hero"><svg class="p2-hero-geo" width="116" height="116" viewBox="0 0 116 116"><circle cx="58" cy="58" r="52" fill="none" stroke="#fff"/><circle cx="58" cy="58" r="36" fill="none" stroke="#fff" stroke-width=".5"/><line x1="6" y1="58" x2="110" y2="58" stroke="#fff" stroke-width=".5"/><line x1="58" y1="6" x2="58" y2="110" stroke="#fff" stroke-width=".5"/></svg><div class="p2-hero-inner"><div><div class="p2-eyebrow" data-p2="hero.eyebrow"></div><div class="p2-title" id="p2HeroTitle"></div><div class="p2-accent"></div></div><div class="p2-hero-desc" data-p2="hero.description"></div></div></section>
+      <section class="p2-state"><div class="p2-state-label">CURRENT STATE</div><div class="p2-state-div"></div><div class="p2-tags" id="p2Tags"></div></section>
+      <section class="p2-body"><div class="p2-section-block p2-problem-section"><div class="p2-sec-head"><div class="p2-sec-num">01</div><div class="p2-sec-label">WHAT'S HOLDING PRONTO BACK</div><div class="p2-sec-line"></div></div><div class="p2-grid p2-problem-grid" id="p2ProblemGrid"></div></div><div class="p2-section-block p2-solution-section"><div class="p2-sec-head"><div class="p2-sec-num">02</div><div class="p2-sec-label">WHAT AIZYNT WILL BUILD &amp; DELIVER</div><div class="p2-sec-line"></div></div><div class="p2-grid p2-solution-grid" id="p2SolutionGrid"></div></div><div class="p2-outcome" id="p2OutcomeGrid"></div></section>
+      <footer class="p2-footer"><div class="p2-ft-left"><div class="p2-ft-bar"></div><div><div class="p2-ft-name" data-p2="footer.name"></div><div class="p2-ft-contact" data-p2="footer.contact"></div></div></div><div class="p2-ft-right"><div class="p2-ft-links" data-p2="footer.location"></div><div class="p2-ft-page" data-p2="footer.page"></div></div></footer>
+    </div></div></div></div></div>
+  </main>
+  <div class="loading-overlay" id="loadingOverlay"><div class="loading-card"><div class="loading-spinner"></div><div class="loading-text">Generating combined PDF...</div><div class="loading-sub">Both pages will download as one PDF</div></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
