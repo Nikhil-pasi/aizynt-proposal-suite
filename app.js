@@ -210,27 +210,67 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   async function renderPageCanvas(pdfFactory, element, width, height) {
-    const worker = pdfFactory().set({
-      margin: 0,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        width,
-        height,
-        windowWidth: width,
-        windowHeight: height,
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
-        backgroundColor: '#ffffff',
-        scrollX: 0,
-        scrollY: 0
-      },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
-      pagebreak: { mode: [] }
-    }).from(element).toCanvas();
-    await worker;
-    return worker.get('canvas');
+    const stage = document.createElement('div');
+    stage.className = 'pdf-capture-stage';
+    stage.style.position = 'fixed';
+    stage.style.left = '0';
+    stage.style.top = '0';
+    stage.style.width = width + 'px';
+    stage.style.height = height + 'px';
+    stage.style.overflow = 'hidden';
+    stage.style.background = '#ffffff';
+    stage.style.pointerEvents = 'none';
+    stage.style.zIndex = '9998';
+
+    const clone = element.cloneNode(true);
+    clone.classList.add('pdf-capture-clone');
+    clone.style.width = width + 'px';
+    clone.style.height = height + 'px';
+    clone.style.minWidth = width + 'px';
+    clone.style.minHeight = height + 'px';
+    clone.style.maxWidth = width + 'px';
+    clone.style.maxHeight = height + 'px';
+    clone.style.transform = 'none';
+    clone.style.transformOrigin = 'top left';
+    clone.style.borderRadius = '0';
+    clone.style.boxShadow = 'none';
+    clone.style.margin = '0';
+
+    stage.appendChild(clone);
+    document.body.appendChild(stage);
+    await Promise.all(Array.from(clone.querySelectorAll('img')).map((img) => img.complete ? Promise.resolve() : new Promise((resolve) => {
+      img.onload = resolve;
+      img.onerror = resolve;
+    })));
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+    try {
+      const worker = pdfFactory().set({
+        margin: 0,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          width,
+          height,
+          windowWidth: width,
+          windowHeight: height,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          backgroundColor: '#ffffff',
+          x: 0,
+          y: 0,
+          scrollX: 0,
+          scrollY: 0
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+        pagebreak: { mode: [] }
+      }).from(clone).toCanvas();
+      await worker;
+      return await worker.get('canvas');
+    } finally {
+      stage.remove();
+    }
   }
 
   downloadBtn.addEventListener('click', async () => {
