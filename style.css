@@ -1678,7 +1678,116 @@ body.pdf-exporting .p3-revenue::before {
   margin-top: 3px;
   font-weight: 700;
 }
-.p3-revenue { display: none !important; }
+.p3-gap-section {
+  display: none !important;
+}
+.p3-roadmap-section {
+  margin-top: 8px !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  margin-bottom: 18px !important;
+}
+.p3-roadmap-section::before {
+  inset: -42px -9px -44px !important;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(96,165,250,.16), transparent 34%),
+    linear-gradient(180deg, #F0F7FF 0%, #FFFFFF 92%) !important;
+  border-color: #D9E8FF !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 16px 40px rgba(37,99,235,.06) !important;
+}
+.p3-roadmap {
+  border: .75px solid #BFDBFE !important;
+  background: linear-gradient(180deg, #F4F8FF 0%, #EFF6FF 100%) !important;
+  box-shadow: 0 12px 30px rgba(37,99,235,.08), inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+.p3-roadmap::before {
+  background-image:
+    linear-gradient(rgba(37,99,235,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,.035) 1px, transparent 1px) !important;
+}
+.p3-road-item {
+  min-height: 79px !important;
+  padding: 12px 12px 11px !important;
+  border-right: .75px solid #D9E8FF !important;
+}
+.p3-road-phase {
+  color: #2563EB !important;
+  font-size: 5.6px !important;
+}
+.p3-road-title {
+  color: #172033 !important;
+  font-size: 7.8px !important;
+  line-height: 1.18 !important;
+}
+.p3-road-target {
+  color: #64748B !important;
+  font-size: 5.75px !important;
+  line-height: 1.42 !important;
+}
+.p3-road-result {
+  color: #059669 !important;
+  font-size: 5.8px !important;
+  margin-top: auto !important;
+}
+.p3-impact {
+  display: none !important;
+}
+.p3-revenue {
+  display: grid !important;
+  grid-template-columns: repeat(4,1fr) !important;
+  margin-top: 11px !important;
+  min-height: 96px !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  background: linear-gradient(135deg, #2563EB 0%, #3B82F6 56%, #60A5FA 100%) !important;
+  box-shadow: 0 18px 46px rgba(59,130,246,.2) !important;
+}
+.p3-revenue::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background-image:
+    linear-gradient(rgba(255,255,255,.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.075) 1px, transparent 1px) !important;
+  background-size: 22px 22px !important;
+}
+.p3-rev-item {
+  position: relative !important;
+  z-index: 1 !important;
+  padding: 14px 12px !important;
+  border-right: .5px solid rgba(255,255,255,.22) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+.p3-rev-item:last-child { border-right: 0 !important; }
+.p3-rev-phase {
+  color: rgba(255,255,255,.68) !important;
+  font-size: 5.4px !important;
+  font-weight: 900 !important;
+  margin-bottom: 4px !important;
+}
+.p3-rev-time {
+  color: rgba(255,255,255,.76) !important;
+  font-size: 5.8px !important;
+  font-weight: 800 !important;
+  margin-bottom: 5px !important;
+}
+.p3-rev-value {
+  color: #FFFFFF !important;
+  font: 700 17px/1 'Space Grotesk', 'Manrope', sans-serif !important;
+}
+.p3-rev-item:first-child .p3-rev-value { color: #FEE2E2 !important; }
+.p3-rev-desc {
+  color: rgba(255,255,255,.7) !important;
+  font-size: 5.7px !important;
+  line-height: 1.35 !important;
+  margin-top: 5px !important;
+  font-weight: 750 !important;
+}
 
 /* Keep section tint visual without adding layout height. */
 .p2-section-block {

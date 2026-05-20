@@ -250,17 +250,17 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
     roadmap: {
-      label: 'GROWTH PLAN - GOOGLE ROADMAP + EXPECTED IMPACT',
+      label: 'HOW AIZYNT FIXES THIS - GOOGLE BUSINESS ROADMAP FOR PRONTO',
       items: [
-        { phase:'WEEK 1', title:'GMB Live', target:'Verify profile, set category, hours and service photos.', result:'Maps visibility starts' },
-        { phase:'WEEK 2-3', title:'Reviews Push', target:'Request reviews from happy existing customers.', result:'Trust signals improve' },
-        { phase:'MONTH 1-2', title:'SEO + Posts', target:'Local keywords, service posts and Q&A active.', result:'Rising in search' },
-        { phase:'MONTH 3-6', title:'Top 3 Push', target:'Optimise profile with reviews, posts and website support.', result:'Daily Google calls' }
+        { phase:'WEEK 1', title:'GMB Setup & Verify', target:'Profile live, category set, hours and photos uploaded', result:'-> Appear on Google Maps' },
+        { phase:'WEEK 2-3', title:'Reviews Campaign', target:'WhatsApp existing customers for 5-star reviews', result:'-> 20+ reviews in 30 days' },
+        { phase:'MONTH 1-2', title:'SEO Keywords + Posts', target:'Local keywords, service posts, Q&A active', result:'-> Rising in local search' },
+        { phase:'MONTH 3-6', title:'Rank in Top 3', target:'50+ reviews, optimised profile, consistent posting', result:'-> Calls from Google daily' }
       ]
     },
     revenue: [
-      { phase:'TODAY', time:'Current state', value:'Rs.0', description:'No Google-led enquiries yet.' },
-      { phase:'MONTH 1-2', time:'GMB live + reviews', value:'Rs.8K-15K', description:'First calls from profile discovery.' },
+      { phase:'TODAY', time:'Current state', value:'Rs.0', description:'Zero online leads from Google. Word of mouth only.' },
+      { phase:'MONTH 1-2', time:'GMB live + reviews', value:'Rs.8K-15K', description:'First online calls as profile gets indexed.' },
       { phase:'MONTH 3-4', time:'Ranking + website', value:'Rs.25K-40K', description:'Consistent Maps and website enquiries.' },
       { phase:'MONTH 6+', time:'Top 3 on Google', value:'Rs.60K+', description:'Online becomes a primary lead source.' }
     ],
@@ -285,10 +285,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('p3ScoreStrip').innerHTML = page3.scores.map((item) => '<div class="p3-score"><div class="p3-score-value">' + esc(item.value) + '</div><div class="p3-score-label">' + esc(item.label).replace(/\n/g, '<br>') + '</div></div>').join('');
     document.getElementById('p3AuditRows').innerHTML = page3.competitors.map((row) => '<tr class="' + (row.client ? 'p3-client-row' : '') + '"><td><div class="p3-biz-name">' + esc(row.business) + '</div><div class="p3-biz-sub">' + esc(row.sub) + '</div></td><td><strong>' + esc(row.rating) + '</strong><div class="p3-stars">' + (row.client ? '' : '&starf;&starf;&starf;&starf;&starf;') + '</div></td><td><strong>' + esc(row.reviews) + '</strong></td><td>' + checkMark(row.website) + '</td><td>' + checkMark(row.open) + '</td><td>' + checkMark(row.estimate) + '</td><td><span class="p3-rank">' + esc(row.rank) + '</span></td><td>' + esc(row.years) + '</td></tr>').join('');
     document.getElementById('p3GapGrid').innerHTML = page3.gaps.cards.map((card) => '<div class="p3-gap-card"><div class="p3-gap-top"><div class="p3-icon">' + iconHtml(card.icon) + '</div><div class="p3-comp"><div class="p3-comp-label">' + esc(card.competitorLabel) + '</div><div class="p3-comp-value">' + esc(card.competitorValue) + '</div></div></div><div class="p3-gap-title">' + esc(card.title) + '</div><div class="p3-gap-client">' + esc(card.clientValue) + '</div><div class="p3-gap-desc">' + esc(card.description) + '</div></div>').join('');
-    document.getElementById('p3Roadmap').innerHTML = page3.roadmap.items.map((item, index) => {
-      const rev = page3.revenue[index] || {};
-      return '<div class="p3-road-item"><div class="p3-road-phase">' + esc(item.phase) + '</div><div class="p3-road-title">' + esc(item.title) + '</div><div class="p3-road-target">' + esc(item.target) + '</div><div class="p3-road-result">' + esc(item.result) + '</div><div class="p3-impact"><div><span>' + esc(rev.time || '') + '</span><strong>' + esc(rev.value || '') + '</strong></div><p>' + esc(rev.description || '') + '</p></div></div>';
-    }).join('');
+    document.getElementById('p3Roadmap').innerHTML = page3.roadmap.items.map((item) => '<div class="p3-road-item"><div class="p3-road-phase">' + esc(item.phase) + '</div><div class="p3-road-title">' + esc(item.title) + '</div><div class="p3-road-target">' + esc(item.target) + '</div><div class="p3-road-result">' + esc(item.result) + '</div></div>').join('');
+    document.getElementById('p3Revenue').innerHTML = page3.revenue.map((item) => '<div class="p3-rev-item"><div class="p3-rev-phase">' + esc(item.phase) + '</div><div class="p3-rev-time">' + esc(item.time) + '</div><div class="p3-rev-value">' + esc(item.value) + '</div><div class="p3-rev-desc">' + esc(item.description) + '</div></div>').join('');
   }
   function p3Field(label, path, type) {
     const value = esc(getPath3(page3, path));
