@@ -279,6 +279,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const labels = { website:'W', map:'G', ads:'AD', palette:'B', star:'R', social:'S', search:'SEO', phone:'24', automation:'AI', content:'C', warning:'!', grid:'P' };
     return labels[iconName] || 'G';
   }
+  function parseMoneyValue(value) {
+    const text = String(value || '').toUpperCase();
+    const matches = [...text.matchAll(/(\d+(?:\.\d+)?)/g)].map((m) => Number(m[1]));
+    if (!matches.length) return 0;
+    const average = matches.reduce((sum, n) => sum + n, 0) / matches.length;
+    const multiplier = text.includes('K') ? 1000 : 1;
+    return Math.round(average * multiplier);
+  }
+  function chartPath(points) {
+    return points.map((pt, index) => (index ? 'L' : 'M') + pt.x.toFixed(1) + ' ' + pt.y.toFixed(1)).join(' ');
+  }
+  function renderGrowthChart() {
+    const values = page3.revenue.map((item) => parseMoneyValue(item.value));
+    const maxValue = Math.max(70000, ...values, 45000);
+    const labels = page3.revenue.map((item) => item.phase);
+    const w = 529;
+    const h = 78;
+    const left = 26;
+    const right = 18;
+    const top = 12;
+    const bottom = 17;
+    const innerW = w - left - right;
+    const innerH = h - top - bottom;
+    const toPoint = (value, index, total) => ({
+      x: left + (innerW * index) / Math.max(1, total - 1),
+      y: top + innerH - (innerH * value) / maxValue
+    });
+    const pronto = values.map((value, index) => toPoint(value, index, values.length));
+    const competitor = values.map((_, index) => toPoint(index === values.length - 1 ? 45000 : 40000, index, values.length));
+    const area = chartPath(pronto) + ' L ' + pronto[pronto.length - 1].x.toFixed(1) + ' ' + (top + innerH).toFixed(1) + ' L ' + pronto[0].x.toFixed(1) + ' ' + (top + innerH).toFixed(1) + ' Z';
+    const start = page3.revenue[0] || {};
+    const finish = page3.revenue[page3.revenue.length - 1] || {};
+    const chart = document.getElementById('p3GrowthChart');
+    if (!chart) return;
+    const svgMarkup =
+      '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '">' +
+      '<defs><linearGradient id="p3ChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3B82F6" stop-opacity=".28"/><stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/></linearGradient></defs>' +
+      '<rect x="0" y="0" width="' + w + '" height="' + h + '" rx="8" fill="#EFF6FF" opacity=".78"/>' +
+      [0, 1, 2].map((i) => '<line x1="' + left + '" x2="' + (w - right) + '" y1="' + (top + (innerH * i / 2)).toFixed(1) + '" y2="' + (top + (innerH * i / 2)).toFixed(1) + '" stroke="#2563EB" stroke-opacity=".12" stroke-width=".6"/>').join('') +
+      '<path d="' + area + '" fill="url(#p3ChartFill)"/>' +
+      '<path d="' + chartPath(competitor) + '" fill="none" stroke="#10B981" stroke-width="1.45" stroke-dasharray="6 5" stroke-linecap="round"/>' +
+      '<path d="' + chartPath(pronto) + '" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>' +
+      pronto.map((pt, index) => '<g><circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="3.5" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>' + (index === 0 || index === pronto.length - 1 ? '<text x="' + pt.x.toFixed(1) + '" y="' + Math.max(8, pt.y - 6).toFixed(1) + '" fill="#172033" font-family="Manrope, Arial, sans-serif" font-size="5.3" font-weight="900" text-anchor="middle">' + esc(page3.revenue[index].value) + '</text>' : '') + '<text x="' + pt.x.toFixed(1) + '" y="' + (h - 6) + '" fill="#64748B" font-family="Manrope, Arial, sans-serif" font-size="4.8" font-weight="800" text-anchor="middle">' + esc(labels[index]) + '</text></g>').join('') +
+      '</svg>';
+    chart.innerHTML =
+      '<div class="p3-chart-card"><div class="p3-chart-top"><div><div class="p3-chart-eye">REVENUE GROWTH PROJECTION</div><div class="p3-chart-title">' + esc(start.value || 'Rs.0') + ' to ' + esc(finish.value || 'Rs.60K+') + ' in 6 months</div></div><div class="p3-chart-legend"><span><i></i>Pronto projected</span><span><b></b>Competitor baseline</span></div></div>' +
+      '<img class="p3-chart-img" src="data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgMarkup) + '" alt="Revenue growth projection chart"></div>';
+  }
   function renderPage3() {
     document.querySelectorAll('[data-p3]').forEach((el) => { el.textContent = getPath3(page3, el.dataset.p3); });
     document.getElementById('p3HeroTitle').innerHTML = [p3HeroLine(page3.hero.line1, 'line1'), p3HeroLine(page3.hero.line2, 'line2'), p3HeroLine(page3.hero.line3, 'line3')].join('<br>');
@@ -287,6 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('p3GapGrid').innerHTML = page3.gaps.cards.map((card) => '<div class="p3-gap-card"><div class="p3-gap-top"><div class="p3-icon">' + iconHtml(card.icon) + '</div><div class="p3-comp"><div class="p3-comp-label">' + esc(card.competitorLabel) + '</div><div class="p3-comp-value">' + esc(card.competitorValue) + '</div></div></div><div class="p3-gap-title">' + esc(card.title) + '</div><div class="p3-gap-client">' + esc(card.clientValue) + '</div><div class="p3-gap-desc">' + esc(card.description) + '</div></div>').join('');
     document.getElementById('p3Roadmap').innerHTML = page3.roadmap.items.map((item) => '<div class="p3-road-item"><div class="p3-road-phase">' + esc(item.phase) + '</div><div class="p3-road-title">' + esc(item.title) + '</div><div class="p3-road-target">' + esc(item.target) + '</div><div class="p3-road-result">' + esc(item.result) + '</div></div>').join('');
     document.getElementById('p3Revenue').innerHTML = page3.revenue.map((item) => '<div class="p3-rev-item"><div class="p3-rev-phase">' + esc(item.phase) + '</div><div class="p3-rev-time">' + esc(item.time) + '</div><div class="p3-rev-value">' + esc(item.value) + '</div><div class="p3-rev-desc">' + esc(item.description) + '</div></div>').join('');
+    renderGrowthChart();
   }
   function p3Field(label, path, type) {
     const value = esc(getPath3(page3, path));
