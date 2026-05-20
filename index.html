@@ -23,6 +23,7 @@
     <div class="editor-tabs">
       <button class="tab-btn active" data-editor-tab="page1">Page 1</button>
       <button class="tab-btn" data-editor-tab="page2">Page 2</button>
+      <button class="tab-btn" data-editor-tab="page3">Page 3</button>
     </div>
     <div class="sidebar-scroll">
       <div class="editor-panel active" id="page1Editor">
@@ -38,12 +39,13 @@ Tank Cleaning</textarea><span class="form-hint">Press Enter for two-line names</
         </div>
       </div>
       <div class="editor-panel" id="page2Editor"><div id="page2Fields"></div></div>
+      <div class="editor-panel" id="page3Editor"><div id="page3Fields"></div></div>
     </div>
     <div class="sidebar-footer"><button class="btn-download" id="downloadBtn"><i class="ti ti-download"></i> Download Combined PDF</button><button class="btn-reset" id="resetBtn"><i class="ti ti-refresh"></i> Reset</button></div>
   </aside>
   <button class="sidebar-open-btn" id="sidebarOpenBtn" title="Open form"><i class="ti ti-forms"></i></button>
   <main class="preview-area" id="previewArea">
-    <div class="preview-toolbar"><span class="preview-label">Live Preview - Combined A4 Proposal (Page 01 + Page 02)</span><div class="zoom-controls"><button class="zoom-btn" id="zoomOut" title="Zoom out"><i class="ti ti-minus"></i></button><span class="zoom-value" id="zoomValue">100%</span><button class="zoom-btn" id="zoomIn" title="Zoom in"><i class="ti ti-plus"></i></button><button class="zoom-btn" id="zoomFit" title="Fit to screen"><i class="ti ti-arrows-maximize"></i></button></div></div>
+    <div class="preview-toolbar"><span class="preview-label">Live Preview - Combined A4 Proposal (Page 01 + Page 02 + Page 03)</span><div class="zoom-controls"><button class="zoom-btn" id="zoomOut" title="Zoom out"><i class="ti ti-minus"></i></button><span class="zoom-value" id="zoomValue">100%</span><button class="zoom-btn" id="zoomIn" title="Zoom in"><i class="ti ti-plus"></i></button><button class="zoom-btn" id="zoomFit" title="Fit to screen"><i class="ti ti-arrows-maximize"></i></button></div></div>
     <div class="preview-scroll"><div class="preview-wrapper" id="previewWrapper"><div class="pdf-document" id="pdfDocument"><div class="a4-page pdf-page" id="proposalPage">
 
           <!-- HEADER -->
@@ -212,6 +214,49 @@ Tank Cleaning</textarea><span class="form-hint">Press Enter for two-line names</
       <section class="p2-state"><div class="p2-state-label">CURRENT STATE</div><div class="p2-state-div"></div><div class="p2-tags" id="p2Tags"></div></section>
       <section class="p2-body"><div class="p2-section-block p2-problem-section"><div class="p2-sec-head"><div class="p2-sec-num">01</div><div class="p2-sec-label">WHAT'S HOLDING PRONTO BACK</div><div class="p2-sec-line"></div></div><div class="p2-grid p2-problem-grid" id="p2ProblemGrid"></div></div><div class="p2-section-block p2-solution-section"><div class="p2-sec-head"><div class="p2-sec-num">02</div><div class="p2-sec-label">WHAT AIZYNT WILL BUILD &amp; DELIVER</div><div class="p2-sec-line"></div></div><div class="p2-grid p2-solution-grid" id="p2SolutionGrid"></div></div><div class="p2-outcome" id="p2OutcomeGrid"></div></section>
       <footer class="p2-footer"><div class="p2-ft-left"><div class="p2-ft-bar"></div><div><div class="p2-ft-name" data-p2="footer.name"></div><div class="p2-ft-contact" data-p2="footer.contact"></div></div></div><div class="p2-ft-right"><div class="p2-ft-links" data-p2="footer.location"></div><div class="p2-ft-page" data-p2="footer.page"></div></div></footer>
+    </div></div><div class="p3-page-shell pdf-page" id="proposalPage3"><div class="p3-page">
+      <header class="p3-hdr">
+        <div class="p3-hdr-geo" aria-hidden="true">
+          <span class="p3-hg p3-hg-1"></span>
+          <span class="p3-hg p3-hg-2"></span>
+          <span class="p3-hg-dot p3-hg-dot-1"></span>
+          <span class="p3-hg-dot p3-hg-dot-2"></span>
+          <span class="p3-hg-line"></span>
+        </div>
+        <div class="p3-hdr-logo"><img src="logo.png" alt="Aizynt AI Solutions" class="p3-hdr-logo-img"></div>
+        <div class="p3-hdr-right">
+          <div class="p3-hdr-kicker">AIZYNT AI SOLUTIONS</div>
+          <div class="p3-hdr-pill">DIGITAL GROWTH PROPOSAL &middot; <span id="p3_year">2026</span></div>
+        </div>
+      </header>
+      <section class="p3-hero">
+        <div class="p3-hero-grid" aria-hidden="true"></div>
+        <svg class="p3-hero-geo" width="118" height="118" viewBox="0 0 118 118" aria-hidden="true"><circle cx="59" cy="59" r="53" fill="none" stroke="#fff"/><circle cx="59" cy="59" r="36" fill="none" stroke="#fff" stroke-width=".6"/><circle cx="59" cy="59" r="16" fill="none" stroke="#fff" stroke-width=".45"/><line x1="6" y1="59" x2="112" y2="59" stroke="#fff" stroke-width=".45"/><line x1="59" y1="6" x2="59" y2="112" stroke="#fff" stroke-width=".45"/></svg>
+        <div class="p3-hero-inner">
+          <div>
+            <div class="p3-eyebrow" data-p3="hero.eyebrow"></div>
+            <div class="p3-title" id="p3HeroTitle"></div>
+            <div class="p3-accent"></div>
+          </div>
+          <div class="p3-hero-desc" data-p3="hero.description"></div>
+        </div>
+      </section>
+      <section class="p3-score-strip" id="p3ScoreStrip"></section>
+      <main class="p3-body">
+        <section class="p3-section">
+          <div class="p3-sec-head"><div class="p3-sec-num">01</div><div class="p3-sec-label" data-p3="audit.label"></div><div class="p3-sec-line"></div></div>
+          <div class="p3-table-wrap"><table class="p3-audit-table"><thead><tr><th>Business</th><th>Rating</th><th>Reviews</th><th>Website</th><th>24hr</th><th>Online Est.</th><th>Rank</th><th>Years</th></tr></thead><tbody id="p3AuditRows"></tbody></table></div>
+        </section>
+        <section class="p3-section p3-gap-section">
+          <div class="p3-sec-head"><div class="p3-sec-num">02</div><div class="p3-sec-label" data-p3="gaps.label"></div><div class="p3-sec-line"></div></div>
+          <div class="p3-gap-grid" id="p3GapGrid"></div>
+        </section>
+        <section class="p3-section p3-roadmap-section">
+          <div class="p3-sec-head"><div class="p3-sec-num">03</div><div class="p3-sec-label" data-p3="roadmap.label"></div><div class="p3-sec-line"></div></div>
+          <div class="p3-roadmap" id="p3Roadmap"></div>
+        </section>
+      </main>
+      <footer class="p3-footer"><div class="p3-ft-left"><div class="p3-ft-bar"></div><div><div class="p3-ft-name" data-p3="footer.name"></div><div class="p3-ft-contact" data-p3="footer.contact"></div></div></div><div class="p3-ft-right"><div class="p3-ft-links" data-p3="footer.location"></div><div class="p3-ft-page" data-p3="footer.page"></div></div></footer>
     </div></div></div></div></div>
   </main>
   <div class="loading-overlay" id="loadingOverlay"><div class="loading-card"><div class="loading-spinner"></div><div class="loading-text">Generating combined PDF...</div><div class="loading-sub">Both pages will download as one PDF</div></div></div>

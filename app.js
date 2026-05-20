@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { input: 'proposalDate', target: 'p_date', mode: 'text' },
     { input: 'scope', target: 'p_scope', mode: 'text' },
     { input: 'proposalYear', target: 'p_year', mode: 'text' },
-    { input: 'proposalYear', target: 'p2_year', mode: 'text' }
+    { input: 'proposalYear', target: 'p2_year', mode: 'text' },
+    { input: 'proposalYear', target: 'p3_year', mode: 'text' }
   ];
   const page1Defaults = {};
   page1Bindings.forEach((b) => {
@@ -61,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageWidth = 794;
   const pageHeight = 1123;
   const pageGap = 26;
-  const pageCount = 2;
+  const pageCount = 3;
   function applyZoom() {
     wrapper.style.transform = 'scale(' + currentZoom + ')';
     wrapper.style.width = (pageWidth * currentZoom) + 'px';
@@ -129,6 +130,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const icon = ICON_OPTIONS.find((item) => item.value === iconName) || ICON_OPTIONS[0];
     return '<svg viewBox="0 0 16 16" aria-hidden="true">' + icon.svg + '</svg>';
   }
+  function iconHtml(iconName) {
+    const classes = {
+      website:'ti-world-www',
+      map:'ti-map-pin',
+      ads:'ti-speakerphone',
+      palette:'ti-palette',
+      star:'ti-star',
+      social:'ti-brand-instagram',
+      search:'ti-search',
+      phone:'ti-phone-call',
+      automation:'ti-cpu',
+      content:'ti-layout-grid',
+      warning:'ti-alert-triangle',
+      grid:'ti-grid-dots'
+    };
+    return '<i class="ti ' + (classes[iconName] || 'ti-sparkles') + '" aria-hidden="true"></i>';
+  }
   function heroLine(text, key) {
     const mode = page2.hero.highlightMode;
     if (mode === key) return '<span class="highlight">' + esc(text) + '</span>';
@@ -143,8 +161,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-p2]').forEach((el) => { el.textContent = getPath(page2, el.dataset.p2); });
     document.getElementById('p2HeroTitle').innerHTML = [heroLine(page2.hero.line1, 'line1'), heroLine(page2.hero.line2, 'line2'), heroLine(page2.hero.line3, 'line3')].join('<br>');
     document.getElementById('p2Tags').innerHTML = page2.tags.map((tag) => '<span class="p2-tag"><span class="p2-dot"></span>' + esc(tag) + '</span>').join('');
-    document.getElementById('p2ProblemGrid').innerHTML = page2.problems.map((card) => '<div class="p2-card p2-problem"><div class="p2-card-top"><div class="p2-icon">' + iconSvg(card.icon) + '</div><div class="p2-badge ' + badgeClass(card.badge) + '">' + esc(card.badge) + '</div></div><div class="p2-card-title">' + esc(card.title) + '</div><div class="p2-card-desc">' + esc(card.description) + '</div><div class="p2-card-note">' + esc(card.impact) + '</div></div>').join('');
-    document.getElementById('p2SolutionGrid').innerHTML = page2.solutions.map((card) => '<div class="p2-card p2-solution"><div class="p2-icon">' + iconSvg(card.icon) + '</div><div class="p2-card-title">' + esc(card.title) + '</div><div class="p2-card-desc">' + esc(card.description) + '</div><div class="p2-card-note">' + esc(card.result) + '</div></div>').join('');
+    document.getElementById('p2ProblemGrid').innerHTML = page2.problems.map((card) => '<div class="p2-card p2-problem"><div class="p2-card-top"><div class="p2-icon">' + iconHtml(card.icon) + '</div><div class="p2-badge ' + badgeClass(card.badge) + '">' + esc(card.badge) + '</div></div><div class="p2-card-title">' + esc(card.title) + '</div><div class="p2-card-desc">' + esc(card.description) + '</div><div class="p2-card-note">' + esc(card.impact) + '</div></div>').join('');
+    document.getElementById('p2SolutionGrid').innerHTML = page2.solutions.map((card) => '<div class="p2-card p2-solution"><div class="p2-icon">' + iconHtml(card.icon) + '</div><div class="p2-card-title">' + esc(card.title) + '</div><div class="p2-card-desc">' + esc(card.description) + '</div><div class="p2-card-note">' + esc(card.result) + '</div></div>').join('');
     document.getElementById('p2OutcomeGrid').innerHTML = page2.outcomes.map((item) => '<div class="p2-outcome-col"><div class="p2-oc-label">' + esc(item.label) + '</div><div class="p2-oc-val">' + esc(item.value) + '</div><div class="p2-oc-sub">' + esc(item.subtext) + '</div></div>').join('');
   }
   function field(label, path, type) {
@@ -195,18 +213,139 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   renderPage2All();
 
+  const STATUS_OPTIONS = ['NOT FOUND','NOT OPTIMISED','INACTIVE','ACTIVE'];
+  const DEFAULT_PAGE3 = {
+    hero: {
+      eyebrow: 'GOOGLE BUSINESS AUDIT - NAGPUR',
+      line1: 'Your competitors are',
+      line2: 'winning on Google.',
+      line3: 'Pronto is not there.',
+      highlightMode: 'line2',
+      description: 'We searched "water tank cleaning Nagpur" on Google. Here is exactly what we found - and what every potential Pronto customer sees instead.'
+    },
+    scores: [
+      { value: '1,200+', label: 'Reviews - R2 Solutions\n(top Google result)' },
+      { value: '4.9 star', label: 'Average rating of\ntop 3 competitors' },
+      { value: '24 hrs', label: 'Top competitors\nshow open 24 hours' },
+      { value: '4', label: 'Active businesses ranking\nabove Pronto on Google' },
+      { value: '0', label: 'Times Pronto appears\nin Google search results' }
+    ],
+    audit: { label: 'LIVE GOOGLE BUSINESS AUDIT - SEARCHED "WATER TANK CLEANING NAGPUR"' },
+    competitors: [
+      { business:'R2 Solutions', sub:'Omkar Nagar, Nagpur', rating:'5.0', reviews:'1,200+', website:'yes', open:'yes', estimate:'yes', rank:'#1 RANK', years:'5+ yrs', client:false },
+      { business:'Orange City WTC', sub:'Mire Layout, Nagpur', rating:'4.9', reviews:'426', website:'no', open:'yes', estimate:'no', rank:'#2 RANK', years:'5+ yrs', client:false },
+      { business:'Om Sai Ram Services', sub:'Manewada Rd, Nagpur', rating:'4.9', reviews:'198', website:'no', open:'yes', estimate:'yes', rank:'#3 RANK', years:'3+ yrs', client:false },
+      { business:'Maitry WTC Services', sub:'Renuka Vihar, Nagpur', rating:'4.9', reviews:'107', website:'no', open:'yes', estimate:'yes', rank:'#4 RANK', years:'New', client:false },
+      { business:'Pronto WTC', sub:'Kamal Chowk - 14 years experience', rating:'Not listed', reviews:'0', website:'no', open:'no', estimate:'no', rank:'NOT FOUND', years:'14 yrs', client:true }
+    ],
+    gaps: {
+      label: "WHAT EVERY RANKED COMPETITOR HAS - THAT PRONTO DOESN'T",
+      cards: [
+        { icon:'star', competitorLabel:'TOP COMPETITOR HAS', competitorValue:'1,200+ reviews', title:'Google Reviews', clientValue:'Pronto: 0 reviews', description:'Customers read reviews before calling. 1,200 reviews means instant trust; 0 reviews loses calls.' },
+        { icon:'website', competitorLabel:'R2 SOLUTIONS HAS', competitorValue:'Full website', title:'Professional Website', clientValue:'Pronto: No website', description:'Google rewards businesses with websites in local search and customers get confidence before calling.' },
+        { icon:'phone', competitorLabel:'ALL 4 SHOW AS', competitorValue:'Open 24 hours', title:'Business Hours Listed', clientValue:'Pronto: Not visible', description:'Customers searching at night see open competitors first. Pronto does not appear.' },
+        { icon:'grid', competitorLabel:'RANKED BUSINESSES', competitorValue:'20-50+ photos', title:'Service Photos on GMB', clientValue:'Pronto: 0 photos', description:'Business photos build visual trust and support stronger Maps ranking signals.' },
+        { icon:'search', competitorLabel:'COMPETITORS TARGET', competitorValue:'Local SEO keywords', title:'SEO Keywords & Category', clientValue:'Pronto: Not indexed', description:'Water tank cleaning Nagpur and related searches are captured by competitors.' },
+        { icon:'ads', competitorLabel:'R2 SOLUTIONS', competitorValue:'Online estimates', title:'Online Enquiry System', clientValue:'Pronto: No online booking', description:'Competitors make quote requests easy. Pronto forces customers to search for contact details.' }
+      ]
+    },
+    roadmap: {
+      label: 'GROWTH PLAN - GOOGLE ROADMAP + EXPECTED IMPACT',
+      items: [
+        { phase:'WEEK 1', title:'GMB Live', target:'Verify profile, set category, hours and service photos.', result:'Maps visibility starts' },
+        { phase:'WEEK 2-3', title:'Reviews Push', target:'Request reviews from happy existing customers.', result:'Trust signals improve' },
+        { phase:'MONTH 1-2', title:'SEO + Posts', target:'Local keywords, service posts and Q&A active.', result:'Rising in search' },
+        { phase:'MONTH 3-6', title:'Top 3 Push', target:'Optimise profile with reviews, posts and website support.', result:'Daily Google calls' }
+      ]
+    },
+    revenue: [
+      { phase:'TODAY', time:'Current state', value:'Rs.0', description:'No Google-led enquiries yet.' },
+      { phase:'MONTH 1-2', time:'GMB live + reviews', value:'Rs.8K-15K', description:'First calls from profile discovery.' },
+      { phase:'MONTH 3-4', time:'Ranking + website', value:'Rs.25K-40K', description:'Consistent Maps and website enquiries.' },
+      { phase:'MONTH 6+', time:'Top 3 on Google', value:'Rs.60K+', description:'Online becomes a primary lead source.' }
+    ],
+    footer: { name:'Nikhil Bawariya - Founder, Aizynt AI Solutions', contact:'+91 76208 16906 - aizyntaisolutions@gmail.com - aizynt.com - @aizynt.ai', location:'Nagpur, Maharashtra\nConfidential', page:'03 / 09' }
+  };
+  let page3 = JSON.parse(JSON.stringify(DEFAULT_PAGE3));
+  const setPath3 = (root, path, value) => { const keys = path.split('.'); const last = keys.pop(); let obj = root; keys.forEach((key) => obj = obj[key]); obj[last] = value; };
+  const getPath3 = (root, path) => path.split('.').reduce((obj, key) => obj && obj[key], root);
+  function p3HeroLine(text, key) {
+    return page3.hero.highlightMode === key ? '<span class="highlight">' + esc(text) + '</span>' : esc(text);
+  }
+  function checkMark(value) {
+    return value === 'yes' ? '<span class="p3-check">&#10003;</span>' : '<span class="p3-cross">X</span>';
+  }
+  function p3IconSymbol(iconName) {
+    const labels = { website:'W', map:'G', ads:'AD', palette:'B', star:'R', social:'S', search:'SEO', phone:'24', automation:'AI', content:'C', warning:'!', grid:'P' };
+    return labels[iconName] || 'G';
+  }
+  function renderPage3() {
+    document.querySelectorAll('[data-p3]').forEach((el) => { el.textContent = getPath3(page3, el.dataset.p3); });
+    document.getElementById('p3HeroTitle').innerHTML = [p3HeroLine(page3.hero.line1, 'line1'), p3HeroLine(page3.hero.line2, 'line2'), p3HeroLine(page3.hero.line3, 'line3')].join('<br>');
+    document.getElementById('p3ScoreStrip').innerHTML = page3.scores.map((item) => '<div class="p3-score"><div class="p3-score-value">' + esc(item.value) + '</div><div class="p3-score-label">' + esc(item.label).replace(/\n/g, '<br>') + '</div></div>').join('');
+    document.getElementById('p3AuditRows').innerHTML = page3.competitors.map((row) => '<tr class="' + (row.client ? 'p3-client-row' : '') + '"><td><div class="p3-biz-name">' + esc(row.business) + '</div><div class="p3-biz-sub">' + esc(row.sub) + '</div></td><td><strong>' + esc(row.rating) + '</strong><div class="p3-stars">' + (row.client ? '' : '&starf;&starf;&starf;&starf;&starf;') + '</div></td><td><strong>' + esc(row.reviews) + '</strong></td><td>' + checkMark(row.website) + '</td><td>' + checkMark(row.open) + '</td><td>' + checkMark(row.estimate) + '</td><td><span class="p3-rank">' + esc(row.rank) + '</span></td><td>' + esc(row.years) + '</td></tr>').join('');
+    document.getElementById('p3GapGrid').innerHTML = page3.gaps.cards.map((card) => '<div class="p3-gap-card"><div class="p3-gap-top"><div class="p3-icon">' + iconHtml(card.icon) + '</div><div class="p3-comp"><div class="p3-comp-label">' + esc(card.competitorLabel) + '</div><div class="p3-comp-value">' + esc(card.competitorValue) + '</div></div></div><div class="p3-gap-title">' + esc(card.title) + '</div><div class="p3-gap-client">' + esc(card.clientValue) + '</div><div class="p3-gap-desc">' + esc(card.description) + '</div></div>').join('');
+    document.getElementById('p3Roadmap').innerHTML = page3.roadmap.items.map((item, index) => {
+      const rev = page3.revenue[index] || {};
+      return '<div class="p3-road-item"><div class="p3-road-phase">' + esc(item.phase) + '</div><div class="p3-road-title">' + esc(item.title) + '</div><div class="p3-road-target">' + esc(item.target) + '</div><div class="p3-road-result">' + esc(item.result) + '</div><div class="p3-impact"><div><span>' + esc(rev.time || '') + '</span><strong>' + esc(rev.value || '') + '</strong></div><p>' + esc(rev.description || '') + '</p></div></div>';
+    }).join('');
+  }
+  function p3Field(label, path, type) {
+    const value = esc(getPath3(page3, path));
+    return '<div class="form-group"><label>' + label + '</label>' + (type === 'textarea' ? '<textarea data-p3-path="' + path + '">' + value + '</textarea>' : '<input data-p3-path="' + path + '" value="' + value + '">') + '</div>';
+  }
+  function p3ArrField(label, arrayName, index, prop, type) {
+    const value = esc(page3[arrayName][index][prop]);
+    return '<div class="form-group"><label>' + label + '</label>' + (type === 'textarea' ? '<textarea data-p3-array="' + arrayName + '" data-index="' + index + '" data-field="' + prop + '">' + value + '</textarea>' : '<input data-p3-array="' + arrayName + '" data-index="' + index + '" data-field="' + prop + '" value="' + value + '">') + '</div>';
+  }
+  function p3NestedField(label, group, arrayName, index, prop, type) {
+    const value = esc(page3[group][arrayName][index][prop]);
+    return '<div class="form-group"><label>' + label + '</label>' + (type === 'textarea' ? '<textarea data-p3-group="' + group + '" data-array="' + arrayName + '" data-index="' + index + '" data-field="' + prop + '">' + value + '</textarea>' : '<input data-p3-group="' + group + '" data-array="' + arrayName + '" data-index="' + index + '" data-field="' + prop + '" value="' + value + '">') + '</div>';
+  }
+  function p3IconSelect(index) {
+    const current = page3.gaps.cards[index].icon || ICON_OPTIONS[0].value;
+    return '<div class="form-group"><label>Icon</label><select data-p3-group="gaps" data-array="cards" data-index="' + index + '" data-field="icon">' + ICON_OPTIONS.map((icon) => '<option value="' + icon.value + '"' + (icon.value === current ? ' selected' : '') + '>' + esc(icon.label) + '</option>').join('') + '</select></div>';
+  }
+  function renderPage3Editor() {
+    document.getElementById('page3Fields').innerHTML =
+      '<div class="page-label">Page 3 - GMB Audit Controls</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Blue Hero</div>' + p3Field('Eyebrow','hero.eyebrow') + p3Field('Title Line 1','hero.line1') + p3Field('Title Line 2','hero.line2') + p3Field('Title Line 3','hero.line3') + '<div class="form-group"><label>Highlight Line</label><select data-p3-path="hero.highlightMode">' + ['line1','line2','line3'].map((x) => '<option value="' + x + '"' + (page3.hero.highlightMode === x ? ' selected' : '') + '>' + x + '</option>').join('') + '</select></div>' + p3Field('Description','hero.description','textarea') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Score Strip</div>' + page3.scores.map((item, index) => '<div class="mini-card"><div class="mini-head"><span>Score ' + (index + 1) + '</span></div>' + p3ArrField('Value','scores',index,'value') + p3ArrField('Label','scores',index,'label','textarea') + '</div>').join('') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Competitor Audit Table</div>' + p3Field('Section Label','audit.label') + page3.competitors.map((row, index) => '<div class="mini-card"><div class="mini-head"><span>' + (row.client ? 'Client Row' : 'Competitor ' + (index + 1)) + '</span></div>' + p3ArrField('Business','competitors',index,'business') + p3ArrField('Subline','competitors',index,'sub') + '<div class="small-row">' + p3ArrField('Rating','competitors',index,'rating') + p3ArrField('Reviews','competitors',index,'reviews') + '</div><div class="small-row"><div class="form-group"><label>Website</label><select data-p3-array="competitors" data-index="' + index + '" data-field="website"><option value="yes"' + (row.website === 'yes' ? ' selected' : '') + '>Yes</option><option value="no"' + (row.website === 'no' ? ' selected' : '') + '>No</option></select></div><div class="form-group"><label>24hr Open</label><select data-p3-array="competitors" data-index="' + index + '" data-field="open"><option value="yes"' + (row.open === 'yes' ? ' selected' : '') + '>Yes</option><option value="no"' + (row.open === 'no' ? ' selected' : '') + '>No</option></select></div></div><div class="small-row"><div class="form-group"><label>Online Estimate</label><select data-p3-array="competitors" data-index="' + index + '" data-field="estimate"><option value="yes"' + (row.estimate === 'yes' ? ' selected' : '') + '>Yes</option><option value="no"' + (row.estimate === 'no' ? ' selected' : '') + '>No</option></select></div>' + p3ArrField('Rank','competitors',index,'rank') + '</div>' + p3ArrField('Years Active','competitors',index,'years') + '</div>').join('') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Gap Cards</div>' + p3Field('Section Label','gaps.label') + page3.gaps.cards.map((card, index) => '<div class="mini-card"><div class="mini-head"><span>Gap Card ' + (index + 1) + '</span></div>' + p3IconSelect(index) + p3NestedField('Competitor Label','gaps','cards',index,'competitorLabel') + p3NestedField('Competitor Value','gaps','cards',index,'competitorValue') + p3NestedField('Title','gaps','cards',index,'title') + p3NestedField('Client Value','gaps','cards',index,'clientValue') + p3NestedField('Description','gaps','cards',index,'description','textarea') + '</div>').join('') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Roadmap</div>' + p3Field('Section Label','roadmap.label') + page3.roadmap.items.map((item, index) => '<div class="mini-card"><div class="mini-head"><span>Phase ' + (index + 1) + '</span></div>' + p3NestedField('Phase','roadmap','items',index,'phase') + p3NestedField('Title','roadmap','items',index,'title') + p3NestedField('Target','roadmap','items',index,'target','textarea') + p3NestedField('Result','roadmap','items',index,'result') + '</div>').join('') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Revenue Projection</div>' + page3.revenue.map((item, index) => '<div class="mini-card"><div class="mini-head"><span>Revenue ' + (index + 1) + '</span></div>' + p3ArrField('Phase','revenue',index,'phase') + p3ArrField('Time','revenue',index,'time') + p3ArrField('Value','revenue',index,'value') + p3ArrField('Description','revenue',index,'description','textarea') + '</div>').join('') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Footer</div>' + p3Field('Name','footer.name') + p3Field('Contact','footer.contact','textarea') + p3Field('Location','footer.location') + p3Field('Page Number','footer.page') + '</div>';
+  }
+  function renderPage3All() { renderPage3(); renderPage3Editor(); }
+  document.addEventListener('input', (event) => {
+    const el = event.target;
+    if (el.dataset.p3Path) { setPath3(page3, el.dataset.p3Path, el.value); renderPage3(); }
+    if (el.dataset.p3Array) { page3[el.dataset.p3Array][Number(el.dataset.index)][el.dataset.field] = el.value; renderPage3(); }
+    if (el.dataset.p3Group) { page3[el.dataset.p3Group][el.dataset.array][Number(el.dataset.index)][el.dataset.field] = el.value; renderPage3(); }
+  });
+  document.addEventListener('change', (event) => {
+    const el = event.target;
+    if (el.dataset.p3Path) { setPath3(page3, el.dataset.p3Path, el.value); renderPage3All(); }
+    if (el.dataset.p3Array) { page3[el.dataset.p3Array][Number(el.dataset.index)][el.dataset.field] = el.value; renderPage3(); }
+    if (el.dataset.p3Group) { page3[el.dataset.p3Group][el.dataset.array][Number(el.dataset.index)][el.dataset.field] = el.value; renderPage3(); }
+  });
+  renderPage3All();
+
   function cleanupExportArtifacts() {
     document.querySelectorAll('.html2pdf__container, .html2canvas-container').forEach((el) => el.remove());
   }
 
   resetBtn.addEventListener('click', () => {
-    if (!confirm('Reset both pages to defaults?')) return;
+    if (!confirm('Reset all proposal pages to defaults?')) return;
     page1Bindings.forEach((b) => {
       const input = document.getElementById(b.input);
       if (input && page1Defaults[b.input] !== undefined) { input.value = page1Defaults[b.input]; updatePage1Binding(b); }
     });
     page2 = JSON.parse(JSON.stringify(DEFAULT_PAGE2));
+    page3 = JSON.parse(JSON.stringify(DEFAULT_PAGE3));
     renderPage2All();
+    renderPage3All();
   });
 
   async function renderPageCanvas(pdfFactory, element, width, height) {
@@ -292,7 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cleanupExportArtifacts();
     wrapper.style.transform = 'scale(1)';
     wrapper.style.width = pageWidth + 'px';
-    wrapper.style.height = (pageHeight * 2) + 'px';
+    wrapper.style.height = (pageHeight * pageCount + pageGap * (pageCount - 1)) + 'px';
     pdfDocument.classList.add('exporting');
     document.body.classList.add('pdf-exporting');
     scrollArea.scrollTop = 0;
@@ -303,10 +442,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!pdfFactory) throw new Error('PDF library not loaded.');
       const page1 = document.getElementById('proposalPage');
       const page2 = document.querySelector('#proposalPage2 .p2-page');
-      if (!page1 || !page2) throw new Error('Proposal pages not found.');
+      const page3 = document.querySelector('#proposalPage3 .p3-page');
+      if (!page1 || !page2 || !page3) throw new Error('Proposal pages not found.');
 
       const page1Canvas = await renderPageCanvas(pdfFactory, page1, pageWidth, pageHeight);
       const page2Canvas = await renderPageCanvas(pdfFactory, page2, 595, 842);
+      const page3Canvas = await renderPageCanvas(pdfFactory, page3, 595, 842);
       const seedWorker = pdfFactory().set({
         margin: 0,
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
@@ -321,6 +462,8 @@ document.addEventListener('DOMContentLoaded', () => {
       pdf.addImage(page1Canvas.toDataURL('image/jpeg', 0.98), 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
       pdf.addPage('a4', 'portrait');
       pdf.addImage(page2Canvas.toDataURL('image/jpeg', 0.98), 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
+      pdf.addPage('a4', 'portrait');
+      pdf.addImage(page3Canvas.toDataURL('image/jpeg', 0.98), 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
       console.log('Combined PDF page count:', initialPages, '->', pdf.internal.getNumberOfPages());
       pdf.save(filename);
       console.log('Combined PDF downloaded:', filename);
