@@ -654,6 +654,34 @@ function initAizyntProposalApp() {
           el.style.setProperty('background-image', 'none', 'important');
         });
       });
+      /* Page 4 PDF cleanup: REMOVE (not hide) sections from the clone.
+         html2canvas ignores display:none, so we must remove DOM nodes. */
+      root.querySelectorAll('.p4-journey-panel, .p4-decision, .p4-fix-section, .p4-note').forEach((el) => {
+        el.remove();
+      });
+      /* Fallback: find journey panel by its child .p4-journey element (in case class is missing) */
+      root.querySelectorAll('.p4-journey').forEach((el) => {
+        const panel = el.closest('.p4-panel');
+        if (panel) panel.remove();
+      });
+      /* Also remove the p4-break text if it survived outside the journey panel */
+      root.querySelectorAll('.p4-break').forEach((el) => {
+        el.remove();
+      });
+      /* Scorecard panel fills full width */
+      root.querySelectorAll('.p4-scorecard-panel, .p4-row-mid > .p4-panel').forEach((el) => {
+        el.style.setProperty('width', '100%', 'important');
+        el.style.setProperty('height', '100%', 'important');
+      });
+      /* Row layouts: block mode */
+      root.querySelectorAll('.p4-row-mid, .p4-row-top').forEach((el) => {
+        el.style.setProperty('display', 'block', 'important');
+      });
+      /* Audit panel fills full width (donut panel already removed) */
+      root.querySelectorAll('.p4-row-top > .p4-panel').forEach((el) => {
+        el.style.setProperty('width', '100%', 'important');
+        el.style.setProperty('height', '100%', 'important');
+      });
     }
 
     async function renderCloneWithSvg() {
