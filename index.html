@@ -24,6 +24,7 @@
       <button class="tab-btn active" data-editor-tab="page1">Page 1</button>
       <button class="tab-btn" data-editor-tab="page2">Page 2</button>
       <button class="tab-btn" data-editor-tab="page3">Page 3</button>
+      <button class="tab-btn" data-editor-tab="page4">Page 4</button>
     </div>
     <div class="sidebar-scroll">
       <div class="editor-panel active" id="page1Editor">
@@ -40,12 +41,13 @@ Tank Cleaning</textarea><span class="form-hint">Press Enter for two-line names</
       </div>
       <div class="editor-panel" id="page2Editor"><div id="page2Fields"></div></div>
       <div class="editor-panel" id="page3Editor"><div id="page3Fields"></div></div>
+      <div class="editor-panel" id="page4Editor"><div id="page4Fields"></div></div>
     </div>
-    <div class="sidebar-footer"><button class="btn-download" id="downloadBtn"><i class="ti ti-download"></i> Download Combined PDF</button><button class="btn-reset" id="resetBtn"><i class="ti ti-refresh"></i> Reset</button></div>
+    <div class="sidebar-footer"><button class="btn-download" id="downloadBtn" onclick="window.downloadCombinedPdf && window.downloadCombinedPdf()"><i class="ti ti-download"></i> Download Combined PDF</button><button class="btn-reset" id="resetBtn"><i class="ti ti-refresh"></i> Reset</button></div>
   </aside>
   <button class="sidebar-open-btn" id="sidebarOpenBtn" title="Open form"><i class="ti ti-forms"></i></button>
   <main class="preview-area" id="previewArea">
-    <div class="preview-toolbar"><span class="preview-label">Live Preview - Combined A4 Proposal (Page 01 + Page 02 + Page 03)</span><div class="zoom-controls"><button class="zoom-btn" id="zoomOut" title="Zoom out"><i class="ti ti-minus"></i></button><span class="zoom-value" id="zoomValue">100%</span><button class="zoom-btn" id="zoomIn" title="Zoom in"><i class="ti ti-plus"></i></button><button class="zoom-btn" id="zoomFit" title="Fit to screen"><i class="ti ti-arrows-maximize"></i></button></div></div>
+    <div class="preview-toolbar"><span class="preview-label">Live Preview - Combined A4 Proposal (Page 01 + Page 02 + Page 03 + Page 04)</span><div class="zoom-controls"><button class="zoom-btn" id="zoomOut" title="Zoom out"><i class="ti ti-minus"></i></button><span class="zoom-value" id="zoomValue">100%</span><button class="zoom-btn" id="zoomIn" title="Zoom in"><i class="ti ti-plus"></i></button><button class="zoom-btn" id="zoomFit" title="Fit to screen"><i class="ti ti-arrows-maximize"></i></button></div></div>
     <div class="preview-scroll"><div class="preview-wrapper" id="previewWrapper"><div class="pdf-document" id="pdfDocument"><div class="a4-page pdf-page" id="proposalPage">
 
           <!-- HEADER -->
@@ -261,9 +263,49 @@ Tank Cleaning</textarea><span class="form-hint">Press Enter for two-line names</
         </section>
       </main>
       <footer class="p3-footer"><div class="p3-ft-left"><div class="p3-ft-bar"></div><div><div class="p3-ft-name" data-p3="footer.name"></div><div class="p3-ft-contact" data-p3="footer.contact"></div></div></div><div class="p3-ft-right"><div class="p3-ft-links" data-p3="footer.location"></div><div class="p3-ft-page" data-p3="footer.page"></div></div></footer>
+    </div></div><div class="p4-page-shell pdf-page" id="proposalPage4"><div class="p4-page">
+      <header class="p4-topbar">
+        <div class="p4-hdr-geo" aria-hidden="true"><span></span><span></span><i></i></div>
+        <div class="p4-hdr-logo"><img src="logo.png" alt="Aizynt AI Solutions"></div>
+        <div class="p4-hdr-meta"><div>AIZYNT AI SOLUTIONS</div><strong>DIGITAL GROWTH PROPOSAL &middot; <span id="p4_year">2026</span></strong></div>
+      </header>
+      <section class="p4-hero">
+        <div class="p4-hero-grid" aria-hidden="true"></div>
+        <svg class="p4-hero-geo" width="138" height="138" viewBox="0 0 138 138" aria-hidden="true"><circle cx="69" cy="69" r="60" fill="none" stroke="#fff"/><circle cx="69" cy="69" r="42" fill="none" stroke="#fff" stroke-width=".7"/><circle cx="69" cy="69" r="20" fill="none" stroke="#fff" stroke-width=".5"/></svg>
+        <div class="p4-hero-copy">
+          <div class="p4-eyebrow" data-p4="hero.eyebrow"></div>
+          <div class="p4-title" id="p4HeroTitle"></div>
+          <div class="p4-accent"></div>
+        </div>
+        <p class="p4-hero-desc" data-p4="hero.description"></p>
+      </section>
+      <section class="p4-stats" id="p4Stats"></section>
+      <main class="p4-body">
+        <section class="p4-row p4-row-top">
+          <div class="p4-panel p4-decision">
+            <div class="p4-sec-head"><div class="p4-sec-num">01</div><div class="p4-sec-label" data-p4="heatmap.label"></div><div class="p4-sec-line"></div></div>
+            <div class="p4-card p4-card-flex"><div><div class="p4-card-head" data-p4="heatmap.title"></div><div class="p4-donut-row"><div class="p4-donut" id="p4Donut"></div><div class="p4-legend" id="p4Legend"></div></div></div></div>
+          </div>
+          <div class="p4-panel">
+            <div class="p4-sec-head"><div class="p4-sec-num">01</div><div class="p4-sec-label">TRUST SIGNALS MISSING</div><div class="p4-sec-line"></div></div>
+            <div class="p4-card"><div class="p4-card-head" data-p4="audit.title"></div><div class="p4-audit-stack" id="p4AuditList"></div></div>
+          </div>
+        </section>
+        <section class="p4-panel p4-trust-section">
+          <div class="p4-sec-head"><div class="p4-sec-num">02</div><div class="p4-sec-label" data-p4="trust.label"></div><div class="p4-sec-line"></div></div>
+          <div class="p4-card p4-trust-card"><div class="p4-trust-grid"><div><div class="p4-side-label">Competitors</div><div id="p4CompetitorTrust"></div></div><div class="p4-vs">VS</div><div><div class="p4-side-label">Pronto WTC</div><div id="p4ProntoTrust"></div></div></div><div class="p4-note" data-p4="trust.note"></div></div>
+        </section>
+        <section class="p4-row p4-row-mid">
+          <div class="p4-panel"><div class="p4-sec-head"><div class="p4-sec-num">04</div><div class="p4-sec-label" data-p4="journey.label"></div><div class="p4-sec-line"></div></div><div class="p4-card"><div class="p4-card-head" data-p4="journey.title"></div><div class="p4-journey" id="p4Journey"></div><div class="p4-break" data-p4="journey.breakText"></div></div></div>
+          <div class="p4-panel"><div class="p4-sec-head"><div class="p4-sec-num">03</div><div class="p4-sec-label" data-p4="score.label"></div><div class="p4-sec-line"></div></div><div class="p4-card"><div class="p4-card-head" data-p4="score.title"></div><div id="p4ScoreBars"></div></div></div>
+        </section>
+        <section class="p4-panel p4-fix-section"><div class="p4-sec-head"><div class="p4-sec-num">06</div><div class="p4-sec-label" data-p4="fix.label"></div><div class="p4-sec-line"></div></div><div class="p4-fix-grid" id="p4FixGrid"></div></section>
+        <section class="p4-bottom" id="p4Bottom"></section>
+      </main>
+      <footer class="p4-footer"><div class="p4-ft-left"><div class="p4-ft-bar"></div><div><strong data-p4="footer.name"></strong><span data-p4="footer.contact"></span></div></div><div class="p4-ft-right"><div data-p4="footer.location"></div><strong data-p4="footer.page"></strong></div></footer>
     </div></div></div></div></div>
   </main>
-  <div class="loading-overlay" id="loadingOverlay"><div class="loading-card"><div class="loading-spinner"></div><div class="loading-text">Generating combined PDF...</div><div class="loading-sub">Both pages will download as one PDF</div></div></div>
+  <div class="loading-overlay" id="loadingOverlay"><div class="loading-card"><div class="loading-spinner"></div><div class="loading-text">Generating combined PDF...</div><div class="loading-sub">All pages will download as one PDF</div></div></div>
   <script src="app.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+function initAizyntProposalApp() {
   const sidebar = document.getElementById('sidebar');
   const sidebarToggle = document.getElementById('sidebarToggle');
   const sidebarOpen = document.getElementById('sidebarOpenBtn');
@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { input: 'scope', target: 'p_scope', mode: 'text' },
     { input: 'proposalYear', target: 'p_year', mode: 'text' },
     { input: 'proposalYear', target: 'p2_year', mode: 'text' },
-    { input: 'proposalYear', target: 'p3_year', mode: 'text' }
+    { input: 'proposalYear', target: 'p3_year', mode: 'text' },
+    { input: 'proposalYear', target: 'p4_year', mode: 'text' }
   ];
   const page1Defaults = {};
   page1Bindings.forEach((b) => {
@@ -62,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageWidth = 794;
   const pageHeight = 1123;
   const pageGap = 26;
-  const pageCount = 3;
+  const pageCount = 4;
   function applyZoom() {
     wrapper.style.transform = 'scale(' + currentZoom + ')';
     wrapper.style.width = (pageWidth * currentZoom) + 'px';
@@ -379,6 +380,158 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   renderPage3All();
 
+  const DEFAULT_PAGE4 = {
+    hero: {
+      eyebrow: 'DIGITAL TRUST AUDIT - PAGE 04',
+      line1: 'Customers research you before they call.',
+      line2: 'Right now, Pronto gives them nothing.',
+      line3: '',
+      highlightMode: 'line2',
+      description: 'Before contacting a service provider, customers verify experience, compare options and decide whether to trust the business. At every step of that journey, Pronto is absent online.'
+    },
+    stats: [
+      { value:'35%', tone:'red', label:'Check reviews\nbefore calling' },
+      { value:'25%', tone:'red', label:'Visit website\nbefore deciding' },
+      { value:'0', tone:'amber', label:'Trust signals\nPronto has online' },
+      { value:'Step 3', tone:'red', label:'Journey breaks\nno website found' },
+      { value:'14 yrs', tone:'green', label:'Experience that\nno one can see' }
+    ],
+    heatmap: {
+      label:'CUSTOMER DECISION HEATMAP',
+      title:'What customers check before calling a service',
+      items:[
+        { name:'Reviews', value:35, color:'#2563EB' },
+        { name:'Website', value:25, color:'#3B82F6' },
+        { name:'Photos', value:20, color:'#60A5FA' },
+        { name:'Google Profile', value:12, color:'#93C5FD' },
+        { name:'Social Media', value:8, color:'#BFDBFE' }
+      ]
+    },
+    audit: {
+      title:'Pronto trust signal audit',
+      items:[
+        { name:'Reviews', tag:'Missing' },
+        { name:'Website', tag:'Missing' },
+        { name:'Photos & Proof of Work', tag:'Missing' },
+        { name:'Google Business Profile', tag:'Not Listed' },
+        { name:'Professional Online Presence', tag:'Missing' }
+      ]
+    },
+    trust: {
+      label:'THE TRUST EQUATION',
+      note:'Not low trust - low perceived trust. The experience exists. The proof does not. Every competitor with a website appears more credible by default.',
+      competitors:['14 Years Experience','Professional Website','1,200+ Google Reviews','Photos & Service Proof'],
+      pronto:['14 Years Experience','No Website','Zero Reviews Online','No Digital Proof']
+    },
+    journey: {
+      label:'REAL CUSTOMER BEHAVIOUR',
+      title:'Where the customer journey breaks for Pronto',
+      breakText:'Journey breaks at Step 3 - no website found. Customer moves to a competitor with a website and reviews.',
+      steps:[
+        { icon:'search', label:'Searches\nGoogle', state:'active' },
+        { icon:'map', label:'Opens\nProfile', state:'active' },
+        { icon:'website', label:'Clicks\nWebsite', state:'broken' },
+        { icon:'grid', label:'Checks\nPhotos', state:'dim' },
+        { icon:'phone', label:'Makes\nContact', state:'dim' }
+      ]
+    },
+    score: {
+      label:'COMPETITOR ADVANTAGE SCORECARD',
+      title:'Where Pronto stands vs active competitors',
+      items:[
+        { title:'Online Visibility', competitor:'95', pronto:'10' },
+        { title:'Trust Signals', competitor:'90', pronto:'5' },
+        { title:'Lead Capture Capability', competitor:'100', pronto:'0' }
+      ]
+    },
+    fix: {
+      label:'WHAT AIZYNT WILL FIX',
+      cards:[
+        { today:'Customers hear about Pronto via word of mouth only', tomorrow:'Customers discover Pronto on Google, Maps and website' },
+        { today:'Trust depends entirely on personal referrals', tomorrow:'Trust is visible - reviews, photos, professional site' },
+        { today:'Leads come only during business hours via phone', tomorrow:'Enquiries generated 24/7 - website works while you sleep' },
+        { today:'Competitors with less experience appear far larger online', tomorrow:'Pronto appears as the established market leader it truly is' }
+      ]
+    },
+    bottom: [
+      { label:'CURRENT ONLINE REVENUE', value:'Rs.0', tone:'bad', bullets:['No active online lead engine','No booking system working 24/7'] },
+      { label:'MONTH 6+', value:'24/7 Revenue System Active', tone:'good', bullets:['leads','bookings','trust signals'] }
+    ],
+    footer: { name:'Nikhil Bawariya - Founder, Aizynt AI Solutions', contact:'+91 76208 16906 - aizyntaisolutions@gmail.com - aizynt.com - @aizynt.ai', location:'Nagpur, Maharashtra\nConfidential', page:'04 / 09' }
+  };
+  let page4 = JSON.parse(JSON.stringify(DEFAULT_PAGE4));
+  const getPath4 = (root, path) => path.split('.').reduce((obj, key) => obj && obj[key], root);
+  const setPath4 = (root, path, value) => { const keys = path.split('.'); const last = keys.pop(); let obj = root; keys.forEach((key) => obj = obj[key]); obj[last] = value; };
+  function p4HeroLine(text, key) {
+    if (!text) return '';
+    return page4.hero.highlightMode === key ? '<span class="faded">' + esc(text) + '</span>' : esc(text);
+  }
+  function renderPage4() {
+    document.querySelectorAll('[data-p4]').forEach((el) => { el.textContent = getPath4(page4, el.dataset.p4); });
+    document.getElementById('p4HeroTitle').innerHTML = [p4HeroLine(page4.hero.line1, 'line1'), p4HeroLine(page4.hero.line2, 'line2'), p4HeroLine(page4.hero.line3, 'line3')].filter(Boolean).join('<br>');
+    document.getElementById('p4Stats').innerHTML = page4.stats.map((item) => '<div class="p4-stat p4-' + esc(item.tone) + '"><div class="p4-stat-value">' + esc(item.value) + '</div><div class="p4-stat-label">' + esc(item.label).replace(/\n/g, '<br>') + '</div></div>').join('');
+    const total = page4.heatmap.items.reduce((sum, item) => sum + Number(item.value || 0), 0) || 1;
+    let offset = 0;
+    const radius = 26;
+    const circumference = +(2 * Math.PI * radius).toFixed(2);
+    const donutSegments = page4.heatmap.items.map((item) => {
+      const dash = +(circumference * (Number(item.value || 0) / total)).toFixed(2);
+      const seg = '<circle cx="45" cy="45" r="' + radius + '" fill="none" stroke="' + esc(item.color) + '" stroke-width="14" stroke-dasharray="' + dash + ' ' + (circumference - dash).toFixed(2) + '" stroke-dashoffset="' + (-offset).toFixed(2) + '" transform="rotate(-90 45 45)"/>';
+      offset += dash;
+      return seg;
+    }).join('');
+    document.getElementById('p4Donut').innerHTML = '<div class="p4-donut-ring"><svg viewBox="0 0 90 90" aria-hidden="true"><circle cx="45" cy="45" r="' + radius + '" fill="none" stroke="#EFF6FF" stroke-width="14"/>' + donutSegments + '</svg><div class="p4-donut-hole"><strong>' + total + '%</strong><span>decision mix</span></div></div>';
+    document.getElementById('p4Legend').innerHTML = page4.heatmap.items.map((item) => '<div class="p4-leg-item"><span class="p4-swatch" style="background:' + esc(item.color) + '"></span><span>' + esc(item.name) + '</span><strong>' + esc(item.value) + '%</strong></div>').join('');
+    document.getElementById('p4AuditList').innerHTML = page4.audit.items.map((item) => '<div class="p4-audit-item"><span>' + esc(item.name) + '</span><strong>' + esc(item.tag) + '</strong></div>').join('');
+    const trustList = (items, side) => items.map((item, index) => '<div class="p4-trust-chip ' + (side === 'bad' && index > 0 ? 'bad' : 'good') + '">' + esc(item) + '</div>').join('<div class="p4-plus">+</div>');
+    document.getElementById('p4CompetitorTrust').innerHTML = trustList(page4.trust.competitors, 'good') + '<div class="p4-result good">High Perceived Trust</div>';
+    document.getElementById('p4ProntoTrust').innerHTML = trustList(page4.trust.pronto, 'bad') + '<div class="p4-result bad">Low Perceived Trust</div>';
+    document.getElementById('p4Journey').innerHTML = page4.journey.steps.map((step) => '<div class="p4-jstep ' + esc(step.state) + '"><div class="p4-jicon">' + iconHtml(step.icon) + '</div><div>' + esc(step.label).replace(/\n/g, '<br>') + '</div></div>').join('');
+    document.getElementById('p4ScoreBars').innerHTML = page4.score.items.map((item) => '<div class="p4-score-block"><div class="p4-score-title">' + esc(item.title) + '</div><div class="p4-bar-row"><span>Competitors</span><div class="p4-bar"><div class="p4-bar-fill comp" style="width:' + esc(item.competitor) + '%">' + esc(item.competitor) + '%</div></div></div><div class="p4-bar-row"><span>Pronto</span><div class="p4-bar"><div class="p4-bar-fill pronto" style="width:' + Math.max(6, Number(item.pronto || 0)) + '%">' + esc(item.pronto) + '%</div></div></div></div>').join('');
+    document.getElementById('p4FixGrid').innerHTML = page4.fix.cards.map((card) => '<div class="p4-fix-card"><div class="p4-fix-half"><div class="p4-fix-tag">TODAY</div><p>' + esc(card.today) + '</p></div><div class="p4-fix-arrow">v</div><div class="p4-fix-half good"><div class="p4-fix-tag">TOMORROW</div><p>' + esc(card.tomorrow) + '</p></div></div>').join('');
+    document.getElementById('p4Bottom').innerHTML =
+      '<div class="p4-bottom-col p4-bottom-left bad"><div class="p4-bottom-label">' + esc(page4.bottom[0].label) + '</div><div class="p4-bottom-value">' + esc(page4.bottom[0].value) + '</div><div class="p4-bottom-sub">No digital lead engine active today</div></div>' +
+      '<div class="p4-bottom-arrow"><div class="p4-arrow-line"></div><div class="p4-arrow-pill">' + esc(page4.bottom[1].label) + '</div><div class="p4-arrow-head">→</div></div>' +
+      '<div class="p4-bottom-col p4-bottom-right good"><div class="p4-live-row"><span class="p4-live-dot"></span><div class="p4-bottom-label">PROJECTED SYSTEM</div></div><div class="p4-bottom-value">' + esc(page4.bottom[1].value) + '</div><div class="p4-bottom-sub">' + page4.bottom[1].bullets.map(esc).join(' · ') + '</div></div>';
+  }
+  function p4Field(label, path, type) {
+    const value = esc(getPath4(page4, path));
+    return '<div class="form-group"><label>' + label + '</label>' + (type === 'textarea' ? '<textarea data-p4-path="' + path + '">' + value + '</textarea>' : '<input data-p4-path="' + path + '" value="' + value + '">') + '</div>';
+  }
+  function p4ArrField(label, arrayName, index, prop, type) {
+    const value = esc(page4[arrayName][index][prop]);
+    return '<div class="form-group"><label>' + label + '</label>' + (type === 'textarea' ? '<textarea data-p4-array="' + arrayName + '" data-index="' + index + '" data-field="' + prop + '">' + value + '</textarea>' : '<input data-p4-array="' + arrayName + '" data-index="' + index + '" data-field="' + prop + '" value="' + value + '">') + '</div>';
+  }
+  function p4NestedField(label, group, arrayName, index, prop, type) {
+    const value = esc(page4[group][arrayName][index][prop]);
+    return '<div class="form-group"><label>' + label + '</label>' + (type === 'textarea' ? '<textarea data-p4-group="' + group + '" data-array="' + arrayName + '" data-index="' + index + '" data-field="' + prop + '">' + value + '</textarea>' : '<input data-p4-group="' + group + '" data-array="' + arrayName + '" data-index="' + index + '" data-field="' + prop + '" value="' + value + '">') + '</div>';
+  }
+  function renderPage4Editor() {
+    document.getElementById('page4Fields').innerHTML =
+      '<div class="page-label">Page 4 - Digital Trust Audit Controls</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Hero</div>' + p4Field('Eyebrow','hero.eyebrow') + p4Field('Title Line 1','hero.line1') + p4Field('Title Line 2','hero.line2') + p4Field('Title Line 3','hero.line3') + '<div class="form-group"><label>Highlight Line</label><select data-p4-path="hero.highlightMode">' + ['line1','line2','line3'].map((x) => '<option value="' + x + '"' + (page4.hero.highlightMode === x ? ' selected' : '') + '>' + x + '</option>').join('') + '</select></div>' + p4Field('Description','hero.description','textarea') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Stats</div>' + page4.stats.map((item, index) => '<div class="mini-card"><div class="mini-head"><span>Stat ' + (index + 1) + '</span></div>' + p4ArrField('Value','stats',index,'value') + p4ArrField('Label','stats',index,'label','textarea') + '</div>').join('') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Heatmap</div>' + p4Field('Section Label','heatmap.label') + p4Field('Title','heatmap.title') + page4.heatmap.items.map((item, index) => '<div class="mini-card"><div class="mini-head"><span>Heatmap Item ' + (index + 1) + '</span></div>' + p4NestedField('Name','heatmap','items',index,'name') + p4NestedField('Value','heatmap','items',index,'value') + '</div>').join('') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Audit Missing List</div>' + p4Field('Title','audit.title') + page4.audit.items.map((item, index) => '<div class="mini-card"><div class="mini-head"><span>Audit ' + (index + 1) + '</span></div>' + p4NestedField('Name','audit','items',index,'name') + p4NestedField('Tag','audit','items',index,'tag') + '</div>').join('') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Journey + Scorecard</div>' + p4Field('Journey Label','journey.label') + p4Field('Journey Title','journey.title') + p4Field('Break Text','journey.breakText','textarea') + p4Field('Score Label','score.label') + p4Field('Score Title','score.title') + page4.score.items.map((item, index) => '<div class="mini-card"><div class="mini-head"><span>Score ' + (index + 1) + '</span></div>' + p4NestedField('Title','score','items',index,'title') + p4NestedField('Competitor %','score','items',index,'competitor') + p4NestedField('Pronto %','score','items',index,'pronto') + '</div>').join('') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Fix Cards</div>' + p4Field('Section Label','fix.label') + page4.fix.cards.map((card, index) => '<div class="mini-card"><div class="mini-head"><span>Fix ' + (index + 1) + '</span></div>' + p4NestedField('Today','fix','cards',index,'today','textarea') + p4NestedField('Tomorrow','fix','cards',index,'tomorrow','textarea') + '</div>').join('') + '</div>' +
+      '<div class="p2-editor-card"><div class="p2-editor-title">Footer</div>' + p4Field('Name','footer.name') + p4Field('Contact','footer.contact','textarea') + p4Field('Location','footer.location') + p4Field('Page Number','footer.page') + '</div>';
+  }
+  function renderPage4All() { renderPage4(); renderPage4Editor(); }
+  document.addEventListener('input', (event) => {
+    const el = event.target;
+    if (el.dataset.p4Path) { setPath4(page4, el.dataset.p4Path, el.value); renderPage4(); }
+    if (el.dataset.p4Array) { page4[el.dataset.p4Array][Number(el.dataset.index)][el.dataset.field] = el.value; renderPage4(); }
+    if (el.dataset.p4Group) { page4[el.dataset.p4Group][el.dataset.array][Number(el.dataset.index)][el.dataset.field] = el.value; renderPage4(); }
+  });
+  document.addEventListener('change', (event) => {
+    const el = event.target;
+    if (el.dataset.p4Path) { setPath4(page4, el.dataset.p4Path, el.value); renderPage4All(); }
+    if (el.dataset.p4Array) { page4[el.dataset.p4Array][Number(el.dataset.index)][el.dataset.field] = el.value; renderPage4(); }
+    if (el.dataset.p4Group) { page4[el.dataset.p4Group][el.dataset.array][Number(el.dataset.index)][el.dataset.field] = el.value; renderPage4(); }
+  });
+  renderPage4All();
+
   function cleanupExportArtifacts() {
     document.querySelectorAll('.html2pdf__container, .html2canvas-container').forEach((el) => el.remove());
   }
@@ -391,15 +544,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     page2 = JSON.parse(JSON.stringify(DEFAULT_PAGE2));
     page3 = JSON.parse(JSON.stringify(DEFAULT_PAGE3));
+    page4 = JSON.parse(JSON.stringify(DEFAULT_PAGE4));
     renderPage2All();
     renderPage3All();
+    renderPage4All();
   });
 
-  async function renderPageCanvas(pdfFactory, element, width, height) {
+  async function renderPageCanvas(pdfFactory, element, width, height, contextId) {
     const stage = document.createElement('div');
     stage.className = 'pdf-capture-stage';
     stage.style.position = 'fixed';
-    stage.style.left = '0';
+    stage.style.left = '-10000px';
     stage.style.top = '0';
     stage.style.width = width + 'px';
     stage.style.height = height + 'px';
@@ -421,20 +576,143 @@ document.addEventListener('DOMContentLoaded', () => {
     clone.style.borderRadius = '0';
     clone.style.boxShadow = 'none';
     clone.style.margin = '0';
+    clone.style.setProperty('width', width + 'px', 'important');
+    clone.style.setProperty('height', height + 'px', 'important');
+    clone.style.setProperty('min-width', width + 'px', 'important');
+    clone.style.setProperty('min-height', height + 'px', 'important');
+    clone.style.setProperty('max-width', width + 'px', 'important');
+    clone.style.setProperty('max-height', height + 'px', 'important');
+    clone.style.setProperty('transform', 'none', 'important');
+    clone.style.setProperty('transform-origin', 'top left', 'important');
+    clone.style.setProperty('overflow', 'hidden', 'important');
 
-    stage.appendChild(clone);
+    let captureRoot = clone;
+    if (contextId) {
+      const wrapperNode = document.createElement('div');
+      wrapperNode.id = contextId;
+      wrapperNode.className = 'pdf-capture-context';
+      wrapperNode.style.width = width + 'px';
+      wrapperNode.style.height = height + 'px';
+      wrapperNode.style.overflow = 'hidden';
+      wrapperNode.style.background = '#ffffff';
+      wrapperNode.appendChild(clone);
+      captureRoot = wrapperNode;
+    }
+
+    async function inlineCloneImages(root) {
+      const imgs = Array.from(root.querySelectorAll('img'));
+      await Promise.all(imgs.map(async (img) => {
+        const src = img.currentSrc || img.src || img.getAttribute('src');
+        if (!src || src.startsWith('data:')) return;
+        try {
+          const response = await fetch(src, { cache: 'force-cache' });
+          const blob = await response.blob();
+          const dataUrl = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+          img.setAttribute('src', dataUrl);
+        } catch (error) {
+          img.setAttribute('src', src);
+        }
+      }));
+    }
+
+    function collectLocalCss() {
+      return Array.from(document.styleSheets).map((sheet) => {
+        try {
+          return Array.from(sheet.cssRules || []).map((rule) => rule.cssText).join('\n');
+        } catch (error) {
+          return '';
+        }
+      }).join('\n');
+    }
+
+    function simplifyCanvasBackgrounds(root) {
+      const blue = '#3B82F6';
+      const navy = '#172033';
+      const light = '#F6FAFF';
+      const selectors = [
+        ['.hero, .p2-hero, .p3-hero, .p4-hero, .p2-outcome, .p3-revenue, .p3-roadmap-income, .p4-bottom', blue],
+        ['.prep, .footer, .p3-footer, .p4-footer', navy],
+        ['.p2-state, .p3-scorebar, .p4-stats', '#F0F7FF'],
+        ['.p4-body', light]
+      ];
+      [root, ...Array.from(root.querySelectorAll('*'))].forEach((el) => {
+        const style = getComputedStyle(el);
+        const bg = style.backgroundImage || '';
+        if (bg && bg !== 'none') {
+          el.style.setProperty('background-image', 'none', 'important');
+        }
+        el.style.setProperty('animation', 'none', 'important');
+      });
+      selectors.forEach(([selector, color]) => {
+        root.querySelectorAll(selector).forEach((el) => {
+          el.style.setProperty('background', color, 'important');
+          el.style.setProperty('background-image', 'none', 'important');
+        });
+      });
+    }
+
+    async function renderCloneWithSvg() {
+      await inlineCloneImages(clone);
+      const cssText = collectLocalCss()
+        .replace(/body\.pdf-exporting/g, '.pdf-export-root')
+        .replace(/@import[^;]+;/g, '')
+        .replace(/@font-face\s*{[^}]*}/g, '')
+        .replace(/url\((['"]?)https?:\/\/[^)]*\1\)/g, 'none')
+        .replace(/url\((['"]?)\/\/[^)]*\1\)/g, 'none');
+      const serializer = new XMLSerializer();
+      const serialized = serializer.serializeToString(clone);
+      const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '">' +
+        '<foreignObject width="100%" height="100%">' +
+        '<div xmlns="http://www.w3.org/1999/xhtml" class="pdf-export-root" style="width:' + width + 'px;height:' + height + 'px;overflow:hidden;background:#fff;">' +
+        '<style>' + cssText + '</style>' + serialized +
+        '</div></foreignObject></svg>';
+      const svgUrl = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
+      try {
+        const image = await new Promise((resolve, reject) => {
+          const img = new Image();
+          const timeout = setTimeout(() => reject(new Error('PDF SVG image render timed out.')), 10000);
+          img.onload = () => resolve(img);
+          img.onerror = reject;
+          const finish = (value, isError) => {
+            clearTimeout(timeout);
+            isError ? reject(value) : resolve(value);
+          };
+          img.onload = () => finish(img, false);
+          img.onerror = (error) => finish(error, true);
+          img.src = svgUrl;
+        });
+        const scale = 1.5;
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(width * scale);
+        canvas.height = Math.round(height * scale);
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        return canvas;
+      } finally {
+        URL.revokeObjectURL(svgUrl);
+      }
+    }
+
+    stage.appendChild(captureRoot);
     document.body.appendChild(stage);
-    await Promise.all(Array.from(clone.querySelectorAll('img')).map((img) => img.complete ? Promise.resolve() : new Promise((resolve) => {
-      img.onload = resolve;
-      img.onerror = resolve;
-    })));
-    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-
+    document.body.classList.add('pdf-exporting');
     try {
-      const worker = pdfFactory().set({
-        margin: 0,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: {
+      await inlineCloneImages(captureRoot);
+      simplifyCanvasBackgrounds(captureRoot);
+      await Promise.all(Array.from(captureRoot.querySelectorAll('img')).map((img) => img.complete ? Promise.resolve() : new Promise((resolve) => {
+        img.onload = resolve;
+        img.onerror = resolve;
+      })));
+      if (document.fonts && document.fonts.ready) await document.fonts.ready.catch(() => {});
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      const canvasOptions = {
           scale: 2,
           width,
           height,
@@ -442,24 +720,142 @@ document.addEventListener('DOMContentLoaded', () => {
           windowHeight: height,
           useCORS: true,
           allowTaint: true,
+          imageTimeout: 8000,
           logging: false,
           backgroundColor: '#ffffff',
           x: 0,
           y: 0,
           scrollX: 0,
-          scrollY: 0
-        },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
-        pagebreak: { mode: [] }
-      }).from(clone).toCanvas();
-      await worker;
-      return await worker.get('canvas');
+          scrollY: 0,
+          removeContainer: true
+        };
+      let canvas;
+      if (typeof window.html2canvas === 'function') {
+        canvas = await Promise.race([
+          window.html2canvas(captureRoot, canvasOptions),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('PDF page render timed out.')), 45000))
+        ]);
+      } else if (pdfFactory) {
+        const worker = pdfFactory().set({
+          margin: 0,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: canvasOptions,
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+          pagebreak: { mode: [] }
+        }).from(captureRoot).toCanvas();
+        await Promise.race([
+          worker,
+          new Promise((_, reject) => setTimeout(() => reject(new Error('PDF page render timed out.')), 45000))
+        ]);
+        canvas = await worker.get('canvas');
+      } else {
+        throw new Error('PDF renderer not loaded. Please refresh once.');
+      }
+      canvas.getContext('2d').getImageData(0, 0, 1, 1);
+      return canvas;
+    } catch (error) {
+      console.warn('Page canvas render failed.', error);
+      throw error;
     } finally {
+      document.body.classList.remove('pdf-exporting');
       stage.remove();
     }
   }
 
-  downloadBtn.addEventListener('click', async () => {
+  function dataUrlToBytes(dataUrl) {
+    const base64 = dataUrl.split(',')[1] || '';
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+    return bytes;
+  }
+
+  function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result || '').split(',')[1] || '');
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  async function savePdfToLocalDownloads(blob, filename) {
+    if (!location.hostname.match(/^(127\.0\.0\.1|localhost)$/)) return null;
+    const data = await blobToBase64(blob);
+    const response = await fetch('/save-pdf', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename, data })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.ok) throw new Error(result.error || 'Local PDF save failed.');
+    return result;
+  }
+
+  function buildRasterPdf(canvases, quality) {
+    const encoder = new TextEncoder();
+    const chunks = [];
+    const offsets = [0];
+    let offset = 0;
+    const pageWidthPt = 595.28;
+    const pageHeightPt = 841.89;
+    const objectCount = 2 + canvases.length * 3;
+
+    function addText(text) {
+      const bytes = encoder.encode(text);
+      chunks.push(bytes);
+      offset += bytes.length;
+    }
+
+    function addBytes(bytes) {
+      chunks.push(bytes);
+      offset += bytes.length;
+    }
+
+    function beginObject(number) {
+      offsets[number] = offset;
+      addText(number + ' 0 obj\n');
+    }
+
+    addText('%PDF-1.4\n% Aizynt Proposal\n');
+
+    beginObject(1);
+    addText('<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+
+    beginObject(2);
+    addText('<< /Type /Pages /Count ' + canvases.length + ' /Kids [' + canvases.map((_, index) => (3 + index * 3) + ' 0 R').join(' ') + '] >>\nendobj\n');
+
+    canvases.forEach((canvas, index) => {
+      const pageObject = 3 + index * 3;
+      const contentObject = pageObject + 1;
+      const imageObject = pageObject + 2;
+      const imageName = 'Im' + (index + 1);
+      const imageBytes = dataUrlToBytes(canvas.toDataURL('image/jpeg', quality));
+      const content = 'q\n' + pageWidthPt + ' 0 0 ' + pageHeightPt + ' 0 0 cm\n/' + imageName + ' Do\nQ\n';
+
+      beginObject(pageObject);
+      addText('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + pageWidthPt + ' ' + pageHeightPt + '] /Resources << /XObject << /' + imageName + ' ' + imageObject + ' 0 R >> >> /Contents ' + contentObject + ' 0 R >>\nendobj\n');
+
+      beginObject(contentObject);
+      addText('<< /Length ' + content.length + ' >>\nstream\n' + content + 'endstream\nendobj\n');
+
+      beginObject(imageObject);
+      addText('<< /Type /XObject /Subtype /Image /Width ' + canvas.width + ' /Height ' + canvas.height + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + imageBytes.length + ' >>\nstream\n');
+      addBytes(imageBytes);
+      addText('\nendstream\nendobj\n');
+    });
+
+    const xrefOffset = offset;
+    addText('xref\n0 ' + (objectCount + 1) + '\n0000000000 65535 f \n');
+    for (let number = 1; number <= objectCount; number += 1) {
+      addText(String(offsets[number]).padStart(10, '0') + ' 00000 n \n');
+    }
+    addText('trailer\n<< /Size ' + (objectCount + 1) + ' /Root 1 0 R >>\nstartxref\n' + xrefOffset + '\n%%EOF');
+
+    return new Blob(chunks, { type: 'application/pdf' });
+  }
+
+  async function downloadCombinedPdf() {
     if (downloadBtn.classList.contains('generating')) return;
     downloadBtn.classList.add('generating');
     downloadBtn.innerHTML = '<i class="ti ti-loader"></i> Generating...';
@@ -480,46 +876,45 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapper.style.width = pageWidth + 'px';
     wrapper.style.height = (pageHeight * pageCount + pageGap * (pageCount - 1)) + 'px';
     pdfDocument.classList.add('exporting');
-    document.body.classList.add('pdf-exporting');
     scrollArea.scrollTop = 0;
     scrollArea.scrollLeft = 0;
     await new Promise((resolve) => setTimeout(resolve, 500));
     try {
       const pdfFactory = window.html2pdf || (typeof html2pdf !== 'undefined' ? html2pdf : null);
-      if (!pdfFactory) throw new Error('PDF library not loaded.');
-      const page1 = document.getElementById('proposalPage');
-      const page2 = document.querySelector('#proposalPage2 .p2-page');
-      const page3 = document.querySelector('#proposalPage3 .p3-page');
-      if (!page1 || !page2 || !page3) throw new Error('Proposal pages not found.');
-
-      const page1Canvas = await renderPageCanvas(pdfFactory, page1, pageWidth, pageHeight);
-      const page2Canvas = await renderPageCanvas(pdfFactory, page2, 595, 842);
-      const page3Canvas = await renderPageCanvas(pdfFactory, page3, 595, 842);
-      const seedWorker = pdfFactory().set({
-        margin: 0,
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
-        pagebreak: { mode: [] }
-      }).from(page1).toPdf();
-      await seedWorker;
-      const pdf = await seedWorker.get('pdf');
-      const initialPages = pdf.internal.getNumberOfPages();
-      for (let pageNo = initialPages; pageNo > 1; pageNo -= 1) pdf.deletePage(pageNo);
-      pdf.setPage(1);
-      if (pdf.internal.pages && Array.isArray(pdf.internal.pages[1])) pdf.internal.pages[1].length = 0;
-      pdf.addImage(page1Canvas.toDataURL('image/jpeg', 0.98), 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
-      pdf.addPage('a4', 'portrait');
-      pdf.addImage(page2Canvas.toDataURL('image/jpeg', 0.98), 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
-      pdf.addPage('a4', 'portrait');
-      pdf.addImage(page3Canvas.toDataURL('image/jpeg', 0.98), 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
-      console.log('Combined PDF page count:', initialPages, '->', pdf.internal.getNumberOfPages());
-      pdf.save(filename);
+      if (typeof window.html2canvas !== 'function' && !pdfFactory) throw new Error('PDF renderer not loaded. Please refresh once.');
+      const pages = [
+        { element: document.getElementById('proposalPage'), width: pageWidth, height: pageHeight },
+        { element: document.querySelector('#proposalPage2 .p2-page'), width: 595, height: 842 },
+        { element: document.querySelector('#proposalPage3 .p3-page'), width: 595, height: 842 },
+        { element: document.querySelector('#proposalPage4 .p4-page'), width: 595, height: 842, shellId: 'proposalPage4' }
+      ].filter((page) => page.element);
+      if (pages.length !== 4) throw new Error('All proposal pages were not found.');
+      const canvases = [];
+      for (const page of pages) {
+        canvases.push(await renderPageCanvas(pdfFactory, page.element, page.width, page.height, page.shellId));
+      }
+      const blob = buildRasterPdf(canvases, 0.98);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 30000);
+      let localSave = null;
+      try {
+        localSave = await savePdfToLocalDownloads(blob, filename);
+      } catch (saveError) {
+        console.warn('Local PDF save fallback failed:', saveError);
+      }
+      window.__lastAizyntPdfMeta = { filename, generatedAt: new Date().toISOString(), mode: 'page-canvas-raster', bytes: blob.size, localSave };
       console.log('Combined PDF downloaded:', filename);
     } catch (err) {
       console.error('Combined PDF error:', err);
-      alert('Combined PDF generation failed: ' + err.message + '\nTry Print / Save as PDF from browser.');
+      alert('Combined PDF generation failed: ' + err.message);
     } finally {
       pdfDocument.classList.remove('exporting');
-      document.body.classList.remove('pdf-exporting');
       pdfDocument.style.gap = prevGap;
       wrapper.style.transform = prevTransform;
       wrapper.style.width = prevWidth;
@@ -531,5 +926,13 @@ document.addEventListener('DOMContentLoaded', () => {
       downloadBtn.innerHTML = '<i class="ti ti-download"></i> Download Combined PDF';
       cleanupExportArtifacts();
     }
-  });
-});
+  }
+  window.downloadCombinedPdf = downloadCombinedPdf;
+  downloadBtn.addEventListener('click', downloadCombinedPdf);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAizyntProposalApp);
+} else {
+  initAizyntProposalApp();
+}
